@@ -1,0 +1,11 @@
+*.mexmaci64
+xcuserdata
+project.xcworkspace
+
+Report/*.cls
+Report/*.aux
+Report/*.fdb_latexmk
+Report/*.fls
+Report/*.log
+Report/*.out
+Report/*.synctex.gz
