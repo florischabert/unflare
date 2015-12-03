@@ -11,7 +11,6 @@
 		9D21AACA1C0E20E300C9A9D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAC91C0E20E300C9A9D4 /* AppDelegate.m */; };
 		9D21AACD1C0E20E300C9A9D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AACC1C0E20E300C9A9D4 /* ViewController.m */; };
 		9D21AAD01C0E20E300C9A9D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D21AACE1C0E20E300C9A9D4 /* Main.storyboard */; };
-		9D21AAD51C0E20E300C9A9D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D21AAD31C0E20E300C9A9D4 /* LaunchScreen.storyboard */; };
 		9D21AAE31C0E20ED00C9A9D4 /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AAE21C0E20ED00C9A9D4 /* PhotosUI.framework */; };
 		9D21AAE51C0E20ED00C9A9D4 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AAE41C0E20ED00C9A9D4 /* Photos.framework */; };
 		9D21AAE91C0E20ED00C9A9D4 /* PhotoEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.m */; };
@@ -66,7 +65,6 @@
 		9D21AACB1C0E20E300C9A9D4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		9D21AACC1C0E20E300C9A9D4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9D21AACF1C0E20E300C9A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9D21AAD41C0E20E300C9A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D21AAD61C0E20E300C9A9D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D21AAE01C0E20ED00C9A9D4 /* Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Extension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D21AAE21C0E20ED00C9A9D4 /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
@@ -143,7 +141,6 @@
 				9D21AACB1C0E20E300C9A9D4 /* ViewController.h */,
 				9D21AACC1C0E20E300C9A9D4 /* ViewController.m */,
 				9D21AACE1C0E20E300C9A9D4 /* Main.storyboard */,
-				9D21AAD31C0E20E300C9A9D4 /* LaunchScreen.storyboard */,
 				9DFDAFD71C0E8E3C002CA623 /* aperture.png */,
 				9D21AAD61C0E20E300C9A9D4 /* Info.plist */,
 				9D21AAC51C0E20E300C9A9D4 /* Supporting Files */,
@@ -276,7 +273,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D21AAD51C0E20E300C9A9D4 /* LaunchScreen.storyboard in Resources */,
 				9DFDAFD51C0E84EF002CA623 /* Assets.xcassets in Resources */,
 				9D21AAD01C0E20E300C9A9D4 /* Main.storyboard in Resources */,
 				9DFDAFD81C0E8E3C002CA623 /* aperture.png in Resources */,
@@ -337,14 +333,6 @@
 				9D21AACF1C0E20E300C9A9D4 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9D21AAD31C0E20E300C9A9D4 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9D21AAD41C0E20E300C9A9D4 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 		9D21AAEA1C0E20ED00C9A9D4 /* MainInterface.storyboard */ = {
