@@ -29,6 +29,8 @@ public:
     void inpaint(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpaintedImage);
     
 private:
+    void inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpaintedImage);
+
     Parameters params;
 };
 
