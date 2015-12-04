@@ -136,10 +136,9 @@ void FlareDetector::detect(const cv::Mat& image, cv::Mat& mask)
         std::copy(newContours.begin(), newContours.end(), std::back_inserter(contours));
     }
     
-    // Create mask
     mask = cv::Mat::zeros(image.size(), CV_8UC1);
-    cv::drawContours(mask, contours, -1, cv::Scalar(255), 8, 8);
-    cv::drawContours(mask, contours, -1, cv::Scalar(255), CV_FILLED, 8);
+    cv::drawContours(mask, contours, -1, cv::Scalar(1), 10, 8);
+    cv::drawContours(mask, contours, -1, cv::Scalar(1), CV_FILLED, 8);
 }
 
 #ifndef MATLAB_MEX_FILE

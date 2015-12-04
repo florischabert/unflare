@@ -28,7 +28,8 @@ void FlareInpainter::inpaint(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpai
         return;
     }
 
-    // CDD inpainting
+    // Exemplar-based inpainting
+    
 }
 
 #ifndef MATLAB_MEX_FILE
@@ -42,7 +43,7 @@ extern "C" CGImageRef inpaintFlare(CGImageRef image, CGImageRef mask)
 
     FlareInpainter::Parameters params;
     
-    params.inpaintingType = FlareInpainter::Parameters::inpaintingTELEA;
+    params.inpaintingType = FlareInpainter::Parameters::inpaintingExemplar;
     
     cv::Mat inpaintedImage = cvImage;
     FlareInpainter inpainter = FlareInpainter(params);

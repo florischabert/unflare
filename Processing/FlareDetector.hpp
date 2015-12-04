@@ -37,16 +37,16 @@ public:
         float maxInertiaRatio;
     };
     
-    FlareDetector(const Parameters &parameters);
-    void detect(const cv::Mat& image, cv::Mat& mask);
-    
-private:
     struct Blob {
         float confidence;
         cv::Point2d location;
         float radius;
     };
     
+    FlareDetector(const Parameters &parameters);
+    void detect(const cv::Mat& image, cv::Mat& mask);
+    
+private:
     virtual void filterBlobs(const cv::Mat& binaryImage, std::vector<Blob>& blobs, std::vector <std::vector<cv::Point>>& curContours) const;
     
     Parameters params;

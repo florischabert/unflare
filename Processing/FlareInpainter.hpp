@@ -16,10 +16,13 @@ class FlareInpainter {
 public:
     struct Parameters {
         enum inpaintingTypeStruct {
+            inpaintingExemplar,
             inpaintingNS,
             inpaintingTELEA,
-            inpaintingCDD
         } inpaintingType;
+        
+        int windowSize;
+        int patchSize;
     };
 
     FlareInpainter(const Parameters &parameters);
