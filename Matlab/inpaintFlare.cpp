@@ -14,6 +14,8 @@ void mexFunction(
         
     FlareInpainter::Parameters params;
     params.inpaintingType = static_cast<FlareInpainter::Parameters::inpaintingTypeStruct>(mxGetScalar(mxGetField(prhs[2], 0, "inpaintingType")));
+    params.windowSize = mxGetScalar(mxGetField(prhs[2], 0, "windowSize"));
+    params.patchSize = mxGetScalar(mxGetField(prhs[2], 0, "patchSize"));
 
     cv::Mat cvImage = MxArray(prhs[0]).toMat();
     cv::Mat cvMask = MxArray(prhs[1]).toMat();

@@ -39,8 +39,8 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
         blobBoundingBox -= cv::Point(extraWidth/2, extraHeight/2);
 
         cv::Mat regionOfInterest = inpaintedImage(blobBoundingBox);
-        cv::Mat regionFillMask = inpaintedImage(blobBoundingBox);
-        cv::Mat regionSourceMask = 1 - inpaintedImage(blobBoundingBox);
+        cv::Mat regionFillMask = mask(blobBoundingBox);
+        cv::Mat regionSourceMask = 1 - mask(blobBoundingBox);
         
         // Compute gradients
         cv::Mat grayRegion;
@@ -66,6 +66,8 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
             cv::Mat laplacian;
             cv::Mat kernelLaplacian = (cv::Mat_<float>(3,3)<<1,1,1, 1,-8,1, 1, 1, 1);
             cv::filter2D(laplacian, regionFillMask, -1, kernelLaplacian);
+            
+            regionOfInterest = laplacian;
             
             cv::Mat sourceGradX;
             cv::filter2D(regionSourceMask, sourceGradX, -1, kernelx);
