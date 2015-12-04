@@ -16,6 +16,47 @@ FlareInpainter::FlareInpainter(const Parameters &parameters)
     params = parameters;
 }
 
+void findBestExemplar(const int mm, const int nn, const int m, const int n,
+                        const double img, const double *Ip,
+                        const cv::Mat toFill, cv::Mat sourceRegion,
+                        double *best)
+{
+    int i,j,ii,jj,ii2,jj2,M,N,I,J,ndx,ndx2,mn=m*n,mmnn=mm*nn;
+    double patchErr=0.0,err=0.0,bestErr=1000000000.0;
+
+    /* foreach patch */
+    N=nn-n+1; M=mm-m+1;
+    for (j=1; j<=N; ++j) {
+        J=j+n-1;
+        for (i=1; i<=M; ++i) {
+            I=i+m-1;
+            /** Calculate patch error */
+            /* foreach pixel in the current patch */
+            for (jj=j,jj2=1; jj<=J; ++jj,++jj2) {
+                for (ii=i,ii2=1; ii<=I; ++ii,++ii2) {
+                    ndx=ii-1+mm*(jj-1);
+//                    if (!sourceRegion[ndx]) goto skipPatch;
+//                    ndx2=ii2-1+m*(jj2-1);
+//                    if (!toFill[ndx2]) {
+//                        err=img[ndx ] - Ip[ndx2 ]; patchErr += err*err;
+//                        err=img[ndx+=mmnn] - Ip[ndx2+=mn]; patchErr += err*err;
+//                        err=img[ndx+=mmnn] - Ip[ndx2+=mn]; patchErr += err*err;
+//                    }
+                }
+            }
+            /* Update */
+            if (patchErr < bestErr) {
+                bestErr = patchErr;
+                best[0] = i; best[1] = I;
+                best[2] = j; best[3] = J;
+            }
+            /* Reset ***/
+skipPatch:
+            patchErr = 0.0;
+        }
+    }
+}
+
 void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpaintedImage)
 {
     // Exemplar-based inpainting (A. Criminisi - 2004)
@@ -59,29 +100,36 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
         gradX = -gradY;
         gradY = temp;
         
+        cv::Mat confidences;
+        confidences.convertTo(regionSourceMask, CV_64F);
+        
         // Loop untill the whole region has been filled
         while (cv::countNonZero(regionFillMask) != regionFillMask.total()) {
     
-            // Find contour & normalized gradients of fill region
+            // Compute contours
             cv::Mat laplacian;
-            cv::Mat kernelLaplacian = (cv::Mat_<float>(3,3)<<1,1,1, 1,-8,1, 1, 1, 1);
-            cv::filter2D(laplacian, regionFillMask, -1, kernelLaplacian);
-            
-            regionOfInterest = laplacian;
+            cv::Mat kernelLaplacian = (cv::Mat_<float>(3,3)<<1,1,1, 1,-8,1, 1,1,1);
+            cv::filter2D(regionFillMask, laplacian, -1, kernelLaplacian);
             
             cv::Mat sourceGradX;
             cv::filter2D(regionSourceMask, sourceGradX, -1, kernelx);
             
             cv::Mat sourceGradY;
             cv::filter2D(regionSourceMask, sourceGradY, -1, kernely);
-            
-            sourceGradX = sourceGradX.mul(laplacian > 0);
-            sourceGradY = sourceGradY.mul(laplacian > 0);
 
-            sourceGradX = cv::abs(sourceGradX.mul(sourceGradX != sourceGradX));
-            sourceGradY = cv::abs(sourceGradY.mul(sourceGradY != sourceGradY));
+            sourceGradX = cv::abs(sourceGradX);
+            sourceGradY = cv::abs(sourceGradX);
             
-        
+            // Compute confidence
+            for(int i = 0; i < laplacian.rows; i++) {
+                for(int j = 0; j < laplacian.cols; j++) {
+                    if (laplacian.at<float>(i, j) > 0) {
+                        cv::Rect patch = cv::Rect(i-params.patchSize/2, j-params.patchSize/2,
+                                                  params.patchSize, params.patchSize);
+                        cv::Mat q = regionSourceMask(patch);
+                    }
+                }
+            }
         }
     }
 }
