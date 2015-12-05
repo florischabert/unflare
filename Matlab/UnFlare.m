@@ -41,10 +41,10 @@ for f = 1:size(files, 1);
     params.windowSize = 20;
     params.patchSize = 5;
 
-    mask = zeros(20, 20);
-    mask(6:15,6:15) = ones(10, 10);
-    image = image(1001:1020,1001:1020,:);
-    image(6:15,6:15, :) = zeros(10, 10, 3);
+%     mask = zeros(40, 20);
+%     mask(11:30,6:15) = ones(20, 10);
+%     image = image(1001:1040,1001:1020,:);
+%     image(11:30,6:15, :) = zeros(20, 10, 3);
     inpainted = inpaintFlare(image, mask, params);
 
     figure(f);

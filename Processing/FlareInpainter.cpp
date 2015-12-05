@@ -43,7 +43,7 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
         cv::Mat regionOfInterest = inpaintedImage(blobBoundingBox);
         cv::Mat regionFillMask = mask(blobBoundingBox);
         cv::Mat regionSourceMask = 1 - mask(blobBoundingBox);
-
+        
         // Compute gradients
         cv::Mat grayRegion;
         cv::cvtColor(regionOfInterest, grayRegion, CV_BGR2GRAY);
@@ -73,8 +73,8 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
         cv::Mat confidence = regionSourceMaskDouble.clone();
 
         // Loop untill the whole region has been filled
-        int safe = 0;
-        while (cv::countNonZero(regionFillMask) != regionFillMask.total()) {
+        while (cv::countNonZero(regionFillMask)) {
+            std::cout << "To fill: " << cv::countNonZero(regionFillMask) << std::endl;
 
             // Compute contours
             cv::Mat laplacian;
@@ -95,11 +95,11 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
             for(int i = params.patchSize/2; i < laplacian.rows - params.patchSize/2; i++) {
                 for(int j = params.patchSize/2; j < laplacian.cols - params.patchSize/2; j++) {
                     if (laplacian.at<double>(i, j) > 0) {
-                        
-                        // Compute confidence
-                        cv::Point patchCenter(i-params.patchSize/2, j-params.patchSize/2);
-                        cv::Rect patch(patchCenter, patchSize);
 
+                        // Compute confidence
+                        cv::Point patchCenter(j-params.patchSize/2, i-params.patchSize/2);
+                        cv::Rect patch(patchCenter, patchSize);
+                        
                         cv::Mat confidencePatch = confidence(patch).mul(regionSourceMaskDouble(patch));
 
                         confidence.at<double>(i,j) = cv::sum(confidencePatch)[0];
@@ -115,12 +115,12 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
 
                         if (priority > maxPriority) {
                             maxPriority = priority;
-                            maxPoint = cv::Point(i,j);
+                            maxPoint = cv::Point(j,i);
                         }
                     }
                 }
             }
-            
+
             // Get patch with max priority
             cv::Point patchCenter(maxPoint.x-params.patchSize/2, maxPoint.y-params.patchSize/2);
             cv::Rect patch(patchCenter, patchSize);
@@ -133,8 +133,12 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
             cv::Rect bestPatch;
             for(int i = params.patchSize/2; i < grayRegion.rows - params.patchSize/2; i++) {
                 for(int j = params.patchSize/2; j < grayRegion.cols - params.patchSize/2; j++) {
-                    cv::Point currentPatchCenter(i-params.patchSize/2, j-params.patchSize/2);
+                    cv::Point currentPatchCenter(j-params.patchSize/2, i-params.patchSize/2);
                     cv::Rect currentPatch(currentPatchCenter, patchSize);
+                    
+                    if (cv::countNonZero(regionSourceMask(currentPatch)) != params.patchSize*params.patchSize) {
+                        continue;
+                    }
                     
                     cv::Mat diff = cv::abs(grayRegionDouble(patch) - grayRegionDouble(currentPatch));
                     double error = cv::sum(diff)[0];
@@ -147,34 +151,29 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
                 }
             }
             
-            std::cout << regionFillMask << std::endl;
-
             for(int i = 0; i < patchRegion.rows; i++) {
                 for(int j = 0; j < patchRegion.cols; j++) {
                     if (patchRegion.at<uchar>(i, j)) {
                         
+                        std::cout << "Filling "<< patch << ": " << j << "," << i << std::endl;
+                        
                         // Update fill region
                         patchRegion.at<uchar>(i, j) = 0;
                         patchRegionSource.at<uchar>(i, j) = 1;
+                        regionSourceMask.convertTo(regionSourceMaskDouble, CV_64F);
 
                         // Propagate confidence
                         confidence(patch).at<double>(i,j) = confidence.at<double>(maxPoint);
                         
                         // Propagate isophotes
                         gradX(patch).at<double>(i,j) = gradX(bestPatch).at<double>(i,j);
-                        gradY(patch).at<double>(i,j) = gradX(bestPatch).at<double>(i,j);
+                        gradY(patch).at<double>(i,j) = gradY(bestPatch).at<double>(i,j);
                         
                         // Copy patch to inpainted image
-                        inpaintedImage(patch).at<double>(i,j) = inpaintedImage(bestPatch).at<double>(i,j);
+                        regionOfInterest(patch).at<cv::Scalar>(i,j) = regionOfInterest(bestPatch).at<cv::Scalar>(i,j);
+                        grayRegionDouble(patch).at<double>(i,j) = grayRegionDouble(bestPatch).at<double>(i,j);
                     }
                 }
-            }
-            
-            std::cout << "To fill: " << cv::countNonZero(regionFillMask) << std::endl;
-            
-            safe++;
-            if (safe == 5) {
-                return;
             }
         }
     }
