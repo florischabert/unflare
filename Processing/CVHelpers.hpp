@@ -14,6 +14,6 @@
 #import <opencv2/opencv.hpp>
 
 CGImageRef MatToCGImage(const cv::Mat& image);
-void CGImageToMat(const CGImageRef image, cv::Mat& m);
+cv::Mat CGImageToMat(const CGImageRef image);
 
 #endif /* CVHelpers_h */

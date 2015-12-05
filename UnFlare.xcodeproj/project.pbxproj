@@ -13,19 +13,15 @@
 		9D21AAD01C0E20E300C9A9D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D21AACE1C0E20E300C9A9D4 /* Main.storyboard */; };
 		9D21AAE31C0E20ED00C9A9D4 /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AAE21C0E20ED00C9A9D4 /* PhotosUI.framework */; };
 		9D21AAE51C0E20ED00C9A9D4 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AAE41C0E20ED00C9A9D4 /* Photos.framework */; };
-		9D21AAE91C0E20ED00C9A9D4 /* PhotoEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.m */; };
+		9D21AAE91C0E20ED00C9A9D4 /* PhotoEditingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.mm */; };
 		9D21AAEC1C0E20ED00C9A9D4 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D21AAEA1C0E20ED00C9A9D4 /* MainInterface.storyboard */; };
 		9D21AAF01C0E20ED00C9A9D4 /* Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9D21AAE01C0E20ED00C9A9D4 /* Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		9D21AAFA1C0E231C00C9A9D4 /* FlareDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAF81C0E231C00C9A9D4 /* FlareDetector.cpp */; };
 		9D21AAFB1C0E231C00C9A9D4 /* FlareDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAF81C0E231C00C9A9D4 /* FlareDetector.cpp */; };
-		9D21AAFE1C0E233500C9A9D4 /* FlareInpainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.cpp */; };
 		9D21AAFF1C0E233500C9A9D4 /* FlareInpainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.cpp */; };
 		9D21AB0A1C0E2CA100C9A9D4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */; };
-		9D21AB0C1C0E2CA600C9A9D4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */; };
-		9D3DF6961C0E43FA00D051FE /* CVHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */; };
 		9D3DF6981C0E553900D051FE /* CVHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */; };
-		9DCAF7071C0F7756001D7C57 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCAF7051C0F7749001D7C57 /* opencv2.framework */; };
-		9DCAF70A1C0F7850001D7C57 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCAF7091C0F7850001D7C57 /* opencv2.framework */; };
+		9DA32B581C120FA600F66F2A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */; };
+		9DA32B591C120FD500F66F2A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */; };
 		9DCAF70B1C0F7850001D7C57 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCAF7091C0F7850001D7C57 /* opencv2.framework */; };
 		9DFDAFD51C0E84EF002CA623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */; };
 		9DFDAFD61C0E84EF002CA623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */; };
@@ -70,7 +66,7 @@
 		9D21AAE21C0E20ED00C9A9D4 /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
 		9D21AAE41C0E20ED00C9A9D4 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		9D21AAE71C0E20ED00C9A9D4 /* PhotoEditingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoEditingViewController.h; sourceTree = "<group>"; };
-		9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoEditingViewController.m; sourceTree = "<group>"; };
+		9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoEditingViewController.mm; sourceTree = "<group>"; };
 		9D21AAEB1C0E20ED00C9A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		9D21AAED1C0E20ED00C9A9D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D21AAF81C0E231C00C9A9D4 /* FlareDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FlareDetector.cpp; path = Processing/FlareDetector.cpp; sourceTree = "<group>"; };
@@ -79,9 +75,8 @@
 		9D21AAFD1C0E233500C9A9D4 /* FlareInpainter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FlareInpainter.hpp; path = Processing/FlareInpainter.hpp; sourceTree = "<group>"; };
 		9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CVHelpers.mm; path = Processing/CVHelpers.mm; sourceTree = "<group>"; };
-		9D3DF6971C0E442200D051FE /* CVHelpers.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; name = CVHelpers.hpp; path = Processing/CVHelpers.hpp; sourceTree = "<group>"; };
-		9DCAF7051C0F7749001D7C57 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "/Users/fchabert/Library/Mobile Documents/com~apple~CloudDocs/UnFlare/Processing/opencv2.framework"; sourceTree = "<absolute>"; };
+		9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CVHelpers.mm; path = ../Processing/CVHelpers.mm; sourceTree = "<group>"; };
+		9D3DF6971C0E442200D051FE /* CVHelpers.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; name = CVHelpers.hpp; path = ../Processing/CVHelpers.hpp; sourceTree = "<group>"; };
 		9DCAF7091C0F7850001D7C57 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		9DFDAFD71C0E8E3C002CA623 /* aperture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aperture.png; sourceTree = "<group>"; };
@@ -92,9 +87,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DCAF7071C0F7756001D7C57 /* opencv2.framework in Frameworks */,
-				9D21AB0C1C0E2CA600C9A9D4 /* CoreGraphics.framework in Frameworks */,
-				9DCAF70A1C0F7850001D7C57 /* opencv2.framework in Frameworks */,
 				9D21AB0A1C0E2CA100C9A9D4 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,6 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DA32B591C120FD500F66F2A /* UIKit.framework in Frameworks */,
+				9DA32B581C120FA600F66F2A /* CoreGraphics.framework in Frameworks */,
 				9DCAF70B1C0F7850001D7C57 /* opencv2.framework in Frameworks */,
 				9D21AAE31C0E20ED00C9A9D4 /* PhotosUI.framework in Frameworks */,
 				9D21AAE51C0E20ED00C9A9D4 /* Photos.framework in Frameworks */,
@@ -171,8 +165,10 @@
 		9D21AAE61C0E20ED00C9A9D4 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				9D3DF6971C0E442200D051FE /* CVHelpers.hpp */,
+				9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */,
 				9D21AAE71C0E20ED00C9A9D4 /* PhotoEditingViewController.h */,
-				9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.m */,
+				9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.mm */,
 				9D21AAEA1C0E20ED00C9A9D4 /* MainInterface.storyboard */,
 				9D21AAED1C0E20ED00C9A9D4 /* Info.plist */,
 			);
@@ -186,8 +182,6 @@
 				9D21AAF81C0E231C00C9A9D4 /* FlareDetector.cpp */,
 				9D21AAFD1C0E233500C9A9D4 /* FlareInpainter.hpp */,
 				9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.cpp */,
-				9D3DF6971C0E442200D051FE /* CVHelpers.hpp */,
-				9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */,
 			);
 			name = Processing;
 			sourceTree = "<group>";
@@ -298,9 +292,6 @@
 			files = (
 				9D21AACD1C0E20E300C9A9D4 /* ViewController.m in Sources */,
 				9D21AACA1C0E20E300C9A9D4 /* AppDelegate.m in Sources */,
-				9D21AAFA1C0E231C00C9A9D4 /* FlareDetector.cpp in Sources */,
-				9D21AAFE1C0E233500C9A9D4 /* FlareInpainter.cpp in Sources */,
-				9D3DF6961C0E43FA00D051FE /* CVHelpers.mm in Sources */,
 				9D21AAC71C0E20E300C9A9D4 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,7 +303,7 @@
 				9D21AAFB1C0E231C00C9A9D4 /* FlareDetector.cpp in Sources */,
 				9D21AAFF1C0E233500C9A9D4 /* FlareInpainter.cpp in Sources */,
 				9D3DF6981C0E553900D051FE /* CVHelpers.mm in Sources */,
-				9D21AAE91C0E20ED00C9A9D4 /* PhotoEditingViewController.m in Sources */,
+				9D21AAE91C0E20ED00C9A9D4 /* PhotoEditingViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

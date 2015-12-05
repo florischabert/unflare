@@ -9,7 +9,6 @@
 #ifndef FlareDetector_hpp
 #define FlareDetector_hpp
 
-#ifdef __cplusplus
 #import <opencv2/opencv.hpp>
 
 class FlareDetector {
@@ -51,12 +50,5 @@ private:
     
     Parameters params;
 };
-
-#else
-
-// Takes an input image and returns a flare mask
-CGImageRef detectFlare(CGImageRef image);
-    
-#endif
 
 #endif /* FlareDetector_h */

@@ -9,7 +9,6 @@
 #ifndef FlareInpainter_hpp
 #define FlareInpainter_hpp
 
-#ifdef __cplusplus
 #import <opencv2/opencv.hpp>
 
 class FlareInpainter {
@@ -33,12 +32,5 @@ private:
 
     Parameters params;
 };
-
-#else
-
-// Takes an input image and a flare mask and returns the unflared image
-CGImageRef inpaintFlare(CGImageRef image, CGImageRef mask);
-    
-#endif
 
 #endif /* FlareInpainter_hp */

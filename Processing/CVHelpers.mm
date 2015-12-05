@@ -51,8 +51,9 @@ CGImageRef MatToCGImage(const cv::Mat& image) {
     return imageRef;
 }
 
-void CGImageToMat(const CGImageRef image,
-                  cv::Mat& m) {
+cv::Mat CGImageToMat(const CGImageRef image) {
+    cv::Mat m;
+    
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image);
     CGFloat cols = CGImageGetWidth(image), rows = CGImageGetHeight(image);
     CGContextRef contextRef;
@@ -77,7 +78,5 @@ void CGImageToMat(const CGImageRef image,
                        image);
     CGContextRelease(contextRef);
     
-    if (m.channels() == 4) {
-        cvtColor(m, m, CV_BGRA2BGR);
-    }
+    return m;
 }

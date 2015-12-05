@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B36" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9527.1" systemVersion="15B34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9525.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,11 +18,9 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aperture.png" translatesAutoresizingMaskIntoConstraints="NO" id="iEz-Uc-dc1">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UnFlare" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLZ-8j-Dbh">
-                                <rect key="frame" x="231.5" y="180.5" width="137" height="31.5"/>
-                                <animations/>
+                                <rect key="frame" x="232" y="180" width="137" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="137" id="nyw-ii-Fya"/>
                                 </constraints>
@@ -32,12 +30,10 @@
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="yrn-Uq-Vqg">
                                 <rect key="frame" x="282" y="281" width="37" height="37"/>
-                                <animations/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Photo Library" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnK-cI-oOS">
                                 <rect key="frame" x="200" y="339" width="201" height="18"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="201" id="Ia0-mz-fpo"/>
                                 </constraints>
@@ -46,12 +42,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="iEz-Uc-dc1" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="7Xa-1v-Hgc"/>
+                            <constraint firstItem="iEz-Uc-dc1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ASY-N7-i7q"/>
                             <constraint firstItem="iEz-Uc-dc1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CWB-bR-6zr"/>
                             <constraint firstItem="iEz-Uc-dc1" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="DTS-YJ-1yh"/>
+                            <constraint firstItem="iEz-Uc-dc1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ggj-f7-Q8P"/>
                             <constraint firstItem="yrn-Uq-Vqg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PaX-eb-u4a"/>
                             <constraint firstItem="mnK-cI-oOS" firstAttribute="top" secondItem="yrn-Uq-Vqg" secondAttribute="bottom" constant="21" id="RcM-bc-jnD"/>
                             <constraint firstItem="mnK-cI-oOS" firstAttribute="centerX" secondItem="yrn-Uq-Vqg" secondAttribute="centerX" id="WFP-MC-Ncz"/>

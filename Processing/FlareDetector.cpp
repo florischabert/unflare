@@ -7,7 +7,6 @@
 //
 
 #include "FlareDetector.hpp"
-#include "CVHelpers.hpp"
 
 FlareDetector::FlareDetector(const Parameters &parameters)
 {
@@ -95,10 +94,16 @@ void FlareDetector::detect(const cv::Mat& image, cv::Mat& mask)
     std::vector<std::vector<Blob>> blobs;
     std::vector<std::vector<cv::Point>> contours;
     
+    cv::Mat imageGray = image;
+
+    if (image.channels() != 1) {
+        cv::cvtColor(image, imageGray, CV_BGR2GRAY);
+    }
+    
     // Threshold steps
     for (double thresh = params.minThreshold; thresh < params.maxThreshold; thresh += params.thresholdStep) {
         cv::Mat binarizedImage;
-        cv::threshold(image, binarizedImage, thresh, 255, cv::THRESH_BINARY);
+        cv::threshold(imageGray, binarizedImage, thresh, 255, cv::THRESH_BINARY);
         
         // Filter blobs for each binary image
         std::vector<Blob> curBlobs;
@@ -136,49 +141,7 @@ void FlareDetector::detect(const cv::Mat& image, cv::Mat& mask)
         std::copy(newContours.begin(), newContours.end(), std::back_inserter(contours));
     }
     
-    mask = cv::Mat::zeros(image.size(), CV_8UC1);
+    mask = cv::Mat::zeros(imageGray.size(), CV_8UC1);
     cv::drawContours(mask, contours, -1, cv::Scalar(1), 10, 8);
     cv::drawContours(mask, contours, -1, cv::Scalar(1), CV_FILLED, 8);
 }
-
-#ifndef MATLAB_MEX_FILE
-extern "C" CGImageRef detectFlare(CGImageRef image)
-{
-    // Detector parameters
-    FlareDetector::Parameters params;
-
-    params.minThreshold = 50;
-    params.maxThreshold = 255;
-    params.thresholdStep = 10;
-    params.minDistBetweenBlobs = 50.0f;
-    
-    params.filterByCircularity = true;
-    params.minCircularity = 0.4;
-    params.maxCircularity = 1;
-    
-    params.filterByArea = true;
-    params.minArea = 400.0f;
-    params.maxArea = 1500.0f;
-    
-    params.filterByConvexity = true;
-    params.minConvexity = 0.8;
-    params.maxConvexity = 1;
-    
-    params.filterByInertia = true;
-    params.minInertiaRatio = 0.7;
-    params.maxInertiaRatio = 1;
-    
-    cv::Mat cvImage;
-    CGImageToMat(image, cvImage);
-
-    cv::Mat cvImageGray;
-    cv::cvtColor(cvImage, cvImageGray, CV_BGR2GRAY);
-    
-    // Detect blobs
-    cv::Mat mask;
-    FlareDetector detector = FlareDetector(params);
-    detector.detect(cvImageGray, mask);
-    
-    return MatToCGImage(mask);
-}
-#endif

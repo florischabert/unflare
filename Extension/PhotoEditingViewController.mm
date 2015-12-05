@@ -12,6 +12,7 @@
 
 #import "FlareDetector.hpp"
 #import "FlareInpainter.hpp"
+#import "CVHelpers.hpp"
 
 @interface PhotoEditingViewController () <PHContentEditingController>
 @property (strong) PHContentEditingInput *input;
@@ -45,10 +46,49 @@
     
     CGImageRef image = [UIImage imageWithContentsOfFile:self.input.fullSizeImageURL.path].CGImage;
     
-    CGImageRef mask = detectFlare(image);
-    CGImageRef inpaintedImage = inpaintFlare(image, mask);
+    // Setup Detection
+    FlareDetector::Parameters detectionParams;
     
-    self.imageView.image = [UIImage imageWithCGImage:inpaintedImage];
+    detectionParams.minThreshold = 50;
+    detectionParams.maxThreshold = 255;
+    detectionParams.thresholdStep = 10;
+    detectionParams.minDistBetweenBlobs = 50.0f;
+    
+    detectionParams.filterByCircularity = true;
+    detectionParams.minCircularity = 0.4;
+    detectionParams.maxCircularity = 1;
+    
+    detectionParams.filterByArea = true;
+    detectionParams.minArea = 400.0f;
+    detectionParams.maxArea = 1500.0f;
+    
+    detectionParams.filterByConvexity = true;
+    detectionParams.minConvexity = 0.8;
+    detectionParams.maxConvexity = 1;
+    
+    detectionParams.filterByInertia = true;
+    detectionParams.minInertiaRatio = 0.7;
+    detectionParams.maxInertiaRatio = 1;
+    
+    // Detect blobs
+    cv::Mat mask;
+    FlareDetector detector = FlareDetector(detectionParams);
+    detector.detect(CGImageToMat(image), mask);
+    
+    // Setup Inpainting
+    FlareInpainter::Parameters inpaintingParams;
+    
+    inpaintingParams.inpaintingType = FlareInpainter::Parameters::inpaintingExemplar;
+    inpaintingParams.windowSize = 200;
+    inpaintingParams.patchSize = 9;
+    
+    // Inpaint image
+    cv::Mat inpaintedImage;
+    FlareInpainter inpainter = FlareInpainter(inpaintingParams);
+    inpainter.inpaint(CGImageToMat(image), mask, inpaintedImage);
+    
+    // Show restored image
+    self.imageView.image = [UIImage imageWithCGImage:MatToCGImage(inpaintedImage)];
 }
 
 - (void)finishContentEditingWithCompletionHandler:(void (^)(PHContentEditingOutput *))completionHandler {

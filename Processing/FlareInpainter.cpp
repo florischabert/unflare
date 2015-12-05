@@ -7,7 +7,6 @@
 //
 
 #include "FlareInpainter.hpp"
-#include "CVHelpers.hpp"
 
 #import <opencv2/opencv.hpp>
 
@@ -16,56 +15,18 @@ FlareInpainter::FlareInpainter(const Parameters &parameters)
     params = parameters;
 }
 
-void findBestExemplar(const int mm, const int nn, const int m, const int n,
-                        const double img, const double *Ip,
-                        const cv::Mat toFill, cv::Mat sourceRegion,
-                        double *best)
-{
-    int i,j,ii,jj,ii2,jj2,M,N,I,J,ndx,ndx2,mn=m*n,mmnn=mm*nn;
-    double patchErr=0.0,err=0.0,bestErr=1000000000.0;
-
-    /* foreach patch */
-    N=nn-n+1; M=mm-m+1;
-    for (j=1; j<=N; ++j) {
-        J=j+n-1;
-        for (i=1; i<=M; ++i) {
-            I=i+m-1;
-            /** Calculate patch error */
-            /* foreach pixel in the current patch */
-            for (jj=j,jj2=1; jj<=J; ++jj,++jj2) {
-                for (ii=i,ii2=1; ii<=I; ++ii,++ii2) {
-                    ndx=ii-1+mm*(jj-1);
-//                    if (!sourceRegion[ndx]) goto skipPatch;
-//                    ndx2=ii2-1+m*(jj2-1);
-//                    if (!toFill[ndx2]) {
-//                        err=img[ndx ] - Ip[ndx2 ]; patchErr += err*err;
-//                        err=img[ndx+=mmnn] - Ip[ndx2+=mn]; patchErr += err*err;
-//                        err=img[ndx+=mmnn] - Ip[ndx2+=mn]; patchErr += err*err;
-//                    }
-                }
-            }
-            /* Update */
-            if (patchErr < bestErr) {
-                bestErr = patchErr;
-                best[0] = i; best[1] = I;
-                best[2] = j; best[3] = J;
-            }
-            /* Reset ***/
-skipPatch:
-            patchErr = 0.0;
-        }
-    }
-}
-
 void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpaintedImage)
 {
     // Exemplar-based inpainting (A. Criminisi - 2004)
     
     inpaintedImage = image.clone();
+    
+    cv::Size patchSize(params.patchSize, params.patchSize);
+    mask.convertTo(mask, CV_8U);
 
     // For each blob in mask
     std::vector<std::vector<cv::Point>> contours;
-    findContours(mask, contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
+    findContours(mask.clone(), contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
     
     for (int i = 0; i < contours.size(); i++) {
         // Compute the region of interest
@@ -82,53 +43,138 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
         cv::Mat regionOfInterest = inpaintedImage(blobBoundingBox);
         cv::Mat regionFillMask = mask(blobBoundingBox);
         cv::Mat regionSourceMask = 1 - mask(blobBoundingBox);
-        
+
         // Compute gradients
         cv::Mat grayRegion;
-        cv::cvtColor(regionOfInterest, grayRegion, CV_RGB2GRAY);
+        cv::cvtColor(regionOfInterest, grayRegion, CV_BGR2GRAY);
+
+        cv::Mat grayRegionDouble;
+        grayRegion.convertTo(grayRegionDouble, CV_64F);
+        grayRegionDouble /= 255;
         
         cv::Mat gradX;
-        cv::Mat kernelx = (cv::Mat_<float>(1,3)<<-0.5, 0, 0.5);
-        cv::filter2D(grayRegion, gradX, -1, kernelx);
-        
+        cv::Mat kernelx = (cv::Mat_<double>(3,1)<<-0.5, 0, 0.5);
+        cv::filter2D(grayRegionDouble, gradX, CV_64F, kernelx);
+        gradX /= 255;
+
         cv::Mat gradY;
-        cv::Mat kernely = (cv::Mat_<float>(3,1)<<-0.5, 0, 0.5);
-        cv::filter2D(grayRegion, gradY, -1, kernely);
+        cv::Mat kernely = (cv::Mat_<double>(1,3)<<-0.5, 0, 0.5);
+        cv::filter2D(grayRegionDouble, gradY, CV_64F, kernely);
+        gradY /= 255;
 
         // Rotate gradients 90deg
-        cv::Mat temp = gradX;
+        cv::Mat temp = gradX.clone();
         gradX = -gradY;
         gradY = temp;
         
-        cv::Mat confidences;
-        confidences.convertTo(regionSourceMask, CV_64F);
-        
+        cv::Mat regionSourceMaskDouble;
+        regionSourceMask.convertTo(regionSourceMaskDouble, CV_64F);
+
+        cv::Mat confidence = regionSourceMaskDouble.clone();
+
         // Loop untill the whole region has been filled
+        int safe = 0;
         while (cv::countNonZero(regionFillMask) != regionFillMask.total()) {
-    
+
             // Compute contours
             cv::Mat laplacian;
-            cv::Mat kernelLaplacian = (cv::Mat_<float>(3,3)<<1,1,1, 1,-8,1, 1,1,1);
-            cv::filter2D(regionFillMask, laplacian, -1, kernelLaplacian);
-            
+            cv::Mat kernelLaplacian = (cv::Mat_<double>(3,3)<<1,1,1, 1,-8,1, 1,1,1);
+            cv::filter2D(regionFillMask, laplacian, CV_64F, kernelLaplacian);
+
             cv::Mat sourceGradX;
-            cv::filter2D(regionSourceMask, sourceGradX, -1, kernelx);
+            cv::filter2D(regionSourceMask, sourceGradX, CV_64F, kernelx);
             
             cv::Mat sourceGradY;
-            cv::filter2D(regionSourceMask, sourceGradY, -1, kernely);
-
-            sourceGradX = cv::abs(sourceGradX);
-            sourceGradY = cv::abs(sourceGradX);
+            cv::filter2D(regionSourceMask, sourceGradY, CV_64F, kernely);
             
-            // Compute confidence
-            for(int i = 0; i < laplacian.rows; i++) {
-                for(int j = 0; j < laplacian.cols; j++) {
-                    if (laplacian.at<float>(i, j) > 0) {
-                        cv::Rect patch = cv::Rect(i-params.patchSize/2, j-params.patchSize/2,
-                                                  params.patchSize, params.patchSize);
-                        cv::Mat q = regionSourceMask(patch);
+            sourceGradX /= cv::abs(sourceGradX);
+            sourceGradY /= cv::abs(sourceGradY);
+
+            double maxPriority = 0;
+            cv::Point maxPoint;
+            for(int i = params.patchSize/2; i < laplacian.rows - params.patchSize/2; i++) {
+                for(int j = params.patchSize/2; j < laplacian.cols - params.patchSize/2; j++) {
+                    if (laplacian.at<double>(i, j) > 0) {
+                        
+                        // Compute confidence
+                        cv::Point patchCenter(i-params.patchSize/2, j-params.patchSize/2);
+                        cv::Rect patch(patchCenter, patchSize);
+
+                        cv::Mat confidencePatch = confidence(patch).mul(regionSourceMaskDouble(patch));
+
+                        confidence.at<double>(i,j) = cv::sum(confidencePatch)[0];
+                        confidence.at<double>(i,j) /= params.patchSize * params.patchSize;
+
+                        // Compute patch priorities
+                        double dataTerm = gradX.at<double>(i,j) * sourceGradX.at<double>(i,j);
+                        dataTerm += gradY.at<double>(i,j) * sourceGradY.at<double>(i,j);
+                        dataTerm = cv::abs(dataTerm);
+                        dataTerm += 0.001;
+                        
+                        double priority = confidence.at<double>(i,j) * dataTerm;
+
+                        if (priority > maxPriority) {
+                            maxPriority = priority;
+                            maxPoint = cv::Point(i,j);
+                        }
                     }
                 }
+            }
+            
+            // Get patch with max priority
+            cv::Point patchCenter(maxPoint.x-params.patchSize/2, maxPoint.y-params.patchSize/2);
+            cv::Rect patch(patchCenter, patchSize);
+
+            cv::Mat patchRegion = regionFillMask(patch);
+            cv::Mat patchRegionSource = regionSourceMask(patch);
+            
+            // Find exemplar that minimize error
+            double minError = 1.0/0.0;
+            cv::Rect bestPatch;
+            for(int i = params.patchSize/2; i < grayRegion.rows - params.patchSize/2; i++) {
+                for(int j = params.patchSize/2; j < grayRegion.cols - params.patchSize/2; j++) {
+                    cv::Point currentPatchCenter(i-params.patchSize/2, j-params.patchSize/2);
+                    cv::Rect currentPatch(currentPatchCenter, patchSize);
+                    
+                    cv::Mat diff = cv::abs(grayRegionDouble(patch) - grayRegionDouble(currentPatch));
+                    double error = cv::sum(diff)[0];
+                    error *= error;
+                    
+                    if (minError > error) {
+                        minError = error;
+                        bestPatch = currentPatch;
+                    }
+                }
+            }
+            
+            std::cout << regionFillMask << std::endl;
+
+            for(int i = 0; i < patchRegion.rows; i++) {
+                for(int j = 0; j < patchRegion.cols; j++) {
+                    if (patchRegion.at<uchar>(i, j)) {
+                        
+                        // Update fill region
+                        patchRegion.at<uchar>(i, j) = 0;
+                        patchRegionSource.at<uchar>(i, j) = 1;
+
+                        // Propagate confidence
+                        confidence(patch).at<double>(i,j) = confidence.at<double>(maxPoint);
+                        
+                        // Propagate isophotes
+                        gradX(patch).at<double>(i,j) = gradX(bestPatch).at<double>(i,j);
+                        gradY(patch).at<double>(i,j) = gradX(bestPatch).at<double>(i,j);
+                        
+                        // Copy patch to inpainted image
+                        inpaintedImage(patch).at<double>(i,j) = inpaintedImage(bestPatch).at<double>(i,j);
+                    }
+                }
+            }
+            
+            std::cout << "To fill: " << cv::countNonZero(regionFillMask) << std::endl;
+            
+            safe++;
+            if (safe == 5) {
+                return;
             }
         }
     }
@@ -151,26 +197,3 @@ void FlareInpainter::inpaint(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpai
         return;
     }
 }
-
-#ifndef MATLAB_MEX_FILE
-extern "C" CGImageRef inpaintFlare(CGImageRef image, CGImageRef mask)
-{
-    cv::Mat cvImage;
-    CGImageToMat(image, cvImage);
-
-    cv::Mat cvMask;
-    CGImageToMat(mask, cvMask);
-
-    FlareInpainter::Parameters params;
-    
-    params.inpaintingType = FlareInpainter::Parameters::inpaintingExemplar;
-    params.windowSize = 200;
-    params.patchSize = 9;
-    
-    cv::Mat inpaintedImage = cvImage;
-    FlareInpainter inpainter = FlareInpainter(params);
-    inpainter.inpaint(cvImage, cvMask, inpaintedImage);
-    
-    return MatToCGImage(inpaintedImage);
-}
-#endif
