@@ -26,7 +26,7 @@
 
 \begin{document}
 
-\title{Robust Lens Flare Removal}
+\title{Automated Lens Flare Removal}
 \author{Floris Chabert}
 \date{}
 \maketitle
@@ -44,19 +44,19 @@ This project aims at automatically removing those lens artifacts via post-proces
 
 \section{Related Work}
 
-Previous work found in the image processing literature around flare detection and more general flares detection can be separated in two categories: semi-automatic or using multiple images. Flare detection algorithms involve either having a manual step where the user has to select the general area where the flare is present[1] or the specific color of the flare. This prevents false positive and makes the algorithm more robust.
-The second kind uses multiple pictures to detect flares. Some use images with different exposures to be able to find the spots that saturated the sensor. Others use multiple frames with camera motion in between to figure out where the artifact is [2]. One other interesting category uses pictures with and without flash to detect general flares.
+Previous work found in the image processing literature around lens flare detection and generic flares detection can be separated in two categories: semi-automatic or using multiple images. Some flare detection algorithms involve either having a manual step where the user has to select the general area where the flare is present[1] or the specific color of the flare. This prevents false positive and makes the algorithm more robust.
+The second kind uses multiple pictures to detect flares. They use images with different exposures to be able to find the spots that saturated the sensor. Others use multiple frames with camera motion in between to figure out where the artifact is[2]. Another interesting category uses pictures with and without flash to detect general flares.
 \\
 
-Various methods for recovery exist[3]. They are often referenced to as inpainting algorithms. Two major kind of inpainting are extensively documented: non-texture inpainting - often using partial differential equations based on different diffusion models[6][7] - and texture based methods[4]. Non texture based techniques usually work very well for small regions - especially when using higher degree gerivatives to preserve edges - but have a tendency to produce blurred patches. Texture based inpainiting works better to fill larger holes as they copy-paste patches to recover the image by minimizing some error metric.
+Various methods for recovery exist[3]. They are often referenced to as inpainting algorithms. Two major kind of inpainting are extensively documented: non-texture inpainting - often using partial differential equations based on different diffusion models[6][7] - and texture based methods[4]. Non texture based techniques usually work very well for small regions - especially when using higher degree derivatives to preserve edges - but have a tendency to produce blurred patches. Texture based inpainiting works better to fill larger holes as they copy-paste patches to recover the image by minimizing an error metric.
 
 \section{Method}
 
-Here we aim at an automatic detection of the flares using a single input image. This involve a custom blob detection algorithm based on a concept used in OpenCV[5] tuned for the specific lens flares we want to recover and a hybrid inpainting method called exemplare-based inpainting[8].
+Here we aim at an automated detection of the flares using a single input image. This involves a custom blob detection algorithm based on a concept used in OpenCV[5] tuned for the specific lens flares we want to detect and a hybrid inpainting method called exemplare-based inpainting[8].
 
 \subsection{Detection}
 
-The chosen detection algorithm used involve five main steps:
+The chosen detection algorithm used includes five main steps:
 \\
 
 \begin{figure}[ht!]
@@ -71,10 +71,10 @@ The chosen detection algorithm used involve five main steps:
 \textbf{Contour Detection} For each binary image, we then find the contours using a border following method[9].
 \\
 
-\textbf{Blob Merging} The center of each blob is then computed and blobs from the different binary images are merged depending on their distance and radius. We finally obtain a set of potential flare candidates.
+\textbf{Blob Merging} The center of each blob is then computed and blobs from the different binary images are merged depending on their distance and similarity. We finally obtain a set of potential flare candidates.
 \\
 
-\textbf{Flare Candidates Filtering} The flare candidates are pruned using various metrics which parameters have been tuned using a set of images as to be robust while avoiding false positive. Those metrics include cicrularity of the blob, convexity, inertia and area.
+\textbf{Flare Candidates Filtering} The flare candidates are pruned using various metrics which parameters have been tuned using a set of images as to be robust while avoiding false positive. Those metrics include circularity of the blob, convexity, inertia and area.
 
 \begin{figure}[ht!]
 \centering
@@ -97,10 +97,10 @@ After the flare mask has been computed we can recover the damaged area using exe
 After selecting a window around the flare - to avoid searching over the whole image, assuming good texture candidates are near the missing pixels - we execute the following algorithm until all the pixels have been recovered:
 \\
 
-\textbf{Identify Fill Front} We first find the contour of the region we want to fillb.
+\textbf{Identify Fill Front} We first find the contour of the region we want to fill.
 \\
 
-\textbf{Identify Priority Patches} Patches on the fill front are assigned priorities as to priviledge patches that continue strong edges and are surrounded by high confidence pixels.
+\textbf{Identify Priority Patches} Patches on the fill front are assigned priorities as to privilege patches that continue strong edges and are surrounded by high confidence pixels.
 \\
 
 \textbf{Find Best Exemplar} By priority order, we then search the window for known patches that minimize the error.
@@ -116,15 +116,68 @@ After selecting a window around the flare - to avoid searching over the whole im
 
 \section{Results}
 
+The described method show good results. The detection is robust and finds the flares is the vast majority of picture from the testing set. The exemplare-based technique for recovery is also very solid and allows filling of larger regions without blurring the image.
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=72mm]{../Matlab/Images/1.jpg}
-\caption{Pictures with lens flare artifact}
+\includegraphics[width=72mm]{1a.jpg}
+\caption{Image 1 before processing}
 \end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{1b.jpg}
+\caption{Image 1 after processing}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{2a.jpg}
+\caption{Image 2 before processing}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{2b.jpg}
+\caption{Image 2 after processing}
+\end{figure}
+
+The full algorithm has been implemented in C++ and runs in less than 5 seconds on a Intel-core i5 processor.
+It has also been ported to an arm64 platform and runs in less than 10 seconds on an iPhone 6s.
 
 \section{Discussion}
 
+Different detection algorithm have been tried for this project.
+Circular detection through Hough-transform has not been very robust as most flares are not fully circular.
+A SIFT descriptor based method has also been tested. A set of flare descriptors were learned from a training set and then matched against keypoints in the target image. Unfortunately this method was too dependent on the training set.
+\\
+
+The chosen blob detection method ends up being quite robust. Some issue exist though. The main one being false positives in specific scene. The following figure shows a false detection were a green traffic light in the fog is wrongly thought to be a flare.
+\\
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{light.jpg}
+\caption{Traffic light wrongly detected as a flare}
+\end{figure}
+
+Restoration has also been tried using non texture inpainting. Unfortunately the large size of the flares makes the recovered area quite blurry. Here you can see the difference between a non-texture recovery (using Navier-stokes) compared to the exemplare-based method.
+\\
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{3a.jpg}
+\caption{Recovery using non-texture based inpainting}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{3b.jpg}
+\caption{Recovery using exemplare based inpainting}
+\end{figure}
+
+Future work on this subject include better detection methods to prevent the false positive issue described above as well as better inpainting using modern techniques.
+Another area of research would look at using this method for other kind of flares as well as using the mask of the detected flares to find nearby regions containing flares.
 
 \begin{thebibliography}{1}
 
