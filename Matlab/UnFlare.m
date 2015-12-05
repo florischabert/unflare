@@ -3,13 +3,14 @@ warning off;
 
 display('# Compiling UnFlare algorithms...');
 
-% mex detectFlare.cpp MxArray.cpp ../Processing/FlareDetector.cpp CXXFLAGS="$CXXFLAGS -F../" LDFLAGS="$LDFLAGS -F../ -framework opencv2"
+mex detectFlare.cpp MxArray.cpp ../Processing/FlareDetector.cpp CXXFLAGS="$CXXFLAGS -F../" LDFLAGS="$LDFLAGS -F../ -framework opencv2"
 mex inpaintFlare.cpp MxArray.cpp ../Processing/FlareInpainter.cpp CXXFLAGS="$CXXFLAGS -F../" LDFLAGS="$LDFLAGS -F../ -framework opencv2"
 
 display('# Running algorithm on test pictures...');
 
 files = dir('Images/*.jpg');
 for f = 1:size(files, 1);
+    display(files(f).name);
     image = imread(sprintf('Images/%s', files(f).name));
     
     % Detection
@@ -38,17 +39,11 @@ for f = 1:size(files, 1);
     
     % Inpainting
     params.inpaintingType = 0;
-    params.windowSize = 20;
-    params.patchSize = 5;
+    params.windowSize = 300;
+    params.patchSize = 15;
 
-%     mask = zeros(40, 20);
-%     mask(11:30,6:15) = ones(20, 10);
-%     image = image(1001:1040,1001:1020,:);
-%     image(11:30,6:15, :) = zeros(20, 10, 3);
     inpainted = inpaintFlare(image, mask, params);
 
     figure(f);
     imshow(inpainted);
-    
-    return;
 end

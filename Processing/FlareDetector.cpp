@@ -142,6 +142,6 @@ void FlareDetector::detect(const cv::Mat& image, cv::Mat& mask)
     }
     
     mask = cv::Mat::zeros(imageGray.size(), CV_8UC1);
-    cv::drawContours(mask, contours, -1, cv::Scalar(1), 10, 8);
+    cv::drawContours(mask, contours, -1, cv::Scalar(1), 15, 8);
     cv::drawContours(mask, contours, -1, cv::Scalar(1), CV_FILLED, 8);
 }

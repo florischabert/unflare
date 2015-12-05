@@ -48,15 +48,7 @@ This project aims at automatically removing those lens artifacts to produce a cl
 
 \section{Method}
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=72mm]{Flow.png}
-\caption{Lens flare detection and restoration algorithm}
-\end{figure}
-
 \subsection{Detection}
-The lens flare and ghosting will be precisely detected in the image. They have specific properties which can be used to segment the image [1].
-Those can have different shapes and colors but the affected pixels usually saturate one or multiple color components of the image. We will first use thresholding and blob detection to segment the image and find the potential candidates. Then, other properties of those glares - their specific color and intensity distribution (halo shaped) - will allow us to eliminate potential false positive. We will evaluate the algorithm effectiveness with regard to the different categories of lens flare.
 
 \begin{figure}[ht!]
 \centering
@@ -64,7 +56,29 @@ Those can have different shapes and colors but the affected pixels usually satur
 \caption{Filtering parameters for blob detection[4]}
 \end{figure}
 
-\subsection{Recovery}
+The lens flare and ghosting will be precisely detected in the image. They have specific properties which can be used to segment the image [1].
+Those can have different shapes and colors but the affected pixels usually saturate one or multiple color components of the image. We will first use thresholding and blob detection to segment the image and find the potential candidates. Then, other properties of those glares - their specific color and intensity distribution (halo shaped) - will allow us to eliminate potential false positive. We will evaluate the algorithm effectiveness with regard to the different categories of lens flare.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{flow_detection.png}
+\caption{Flare detection algorithm}
+\end{figure}
+
+\subsection{Inpainting}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{flow_inpainting.png}
+\caption{Flare inpainting algorithm}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=72mm]{algo_inpainting.png}
+\caption{Flare inpainting algorithm}
+\end{figure}
+
 Finally, we will recover the area damaged by the identified artifacts. In order to fill those small regions we will use a partial differential equations inpainting algorithm based on the Curvature-Driven Diffusion model [2][3].
 
 \section{Results}
