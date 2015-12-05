@@ -38,7 +38,7 @@ for f = 1:size(files, 1);
     mask = detectFlare(image, params);
     
     % Inpainting
-    params.inpaintingType = 0;
+    params.inpaintingType = 2;
     params.windowSize = 300;
     params.patchSize = 15;
 
