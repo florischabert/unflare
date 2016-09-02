@@ -72,20 +72,21 @@
     
     // Detect blobs
     cv::Mat mask;
+    cv::Mat originalImage = CGImageToMat(image);
     FlareDetector detector = FlareDetector(detectionParams);
-    detector.detect(CGImageToMat(image), mask);
+    detector.detect(originalImage, mask);
     
     // Setup Inpainting
     FlareInpainter::Parameters inpaintingParams;
     
-    inpaintingParams.inpaintingType = FlareInpainter::Parameters::inpaintingExemplar;
+    inpaintingParams.inpaintingType = FlareInpainter::Parameters::inpaintingTELEA;
     inpaintingParams.windowSize = 200;
     inpaintingParams.patchSize = 9;
     
     // Inpaint image
     cv::Mat inpaintedImage;
     FlareInpainter inpainter = FlareInpainter(inpaintingParams);
-    inpainter.inpaint(CGImageToMat(image), mask, inpaintedImage);
+    inpainter.inpaint(originalImage, mask, inpaintedImage);
     
     // Show restored image
     self.imageView.image = [UIImage imageWithCGImage:MatToCGImage(inpaintedImage)];

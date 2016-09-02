@@ -18,6 +18,7 @@ public:
             inpaintingExemplar,
             inpaintingNS,
             inpaintingTELEA,
+            inpaintingMask,
         } inpaintingType;
         
         int windowSize;

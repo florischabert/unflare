@@ -183,18 +183,26 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
 
 void FlareInpainter::inpaint(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpaintedImage)
 {
+    cv::Mat image3;
+    cv::cvtColor(image, image3, cv::COLOR_BGRA2BGR, 3);
+
+    if (params.inpaintingType == FlareInpainter::Parameters::inpaintingMask) {
+        image.copyTo(inpaintedImage, cv::Mat::ones(mask.size(), mask.type()) * 1 - mask);
+        return;
+    }
+    
     if (params.inpaintingType == FlareInpainter::Parameters::inpaintingNS) {
-        cv::inpaint(inpaintedImage, mask, image, 10, cv::INPAINT_NS);
+        cv::inpaint(image3, mask, inpaintedImage, 10, cv::INPAINT_NS);
         return;
     }
     
     if (params.inpaintingType == FlareInpainter::Parameters::inpaintingTELEA) {
-        cv::inpaint(inpaintedImage, mask, image, 10, cv::INPAINT_TELEA);
+        cv::inpaint(image3, mask, inpaintedImage, 10, cv::INPAINT_TELEA);
         return;
     }
 
     if (params.inpaintingType == FlareInpainter::Parameters::inpaintingExemplar) {
-        inpaintExemplar(image, mask, inpaintedImage);
+        inpaintExemplar(image3, mask, inpaintedImage);
         return;
     }
 }
