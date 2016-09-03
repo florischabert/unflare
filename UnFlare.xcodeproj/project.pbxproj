@@ -7,22 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D21AAC71C0E20E300C9A9D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAC61C0E20E300C9A9D4 /* main.m */; };
-		9D21AACA1C0E20E300C9A9D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAC91C0E20E300C9A9D4 /* AppDelegate.m */; };
-		9D21AACD1C0E20E300C9A9D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AACC1C0E20E300C9A9D4 /* ViewController.m */; };
 		9D21AAD01C0E20E300C9A9D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D21AACE1C0E20E300C9A9D4 /* Main.storyboard */; };
 		9D21AAE31C0E20ED00C9A9D4 /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AAE21C0E20ED00C9A9D4 /* PhotosUI.framework */; };
 		9D21AAE51C0E20ED00C9A9D4 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AAE41C0E20ED00C9A9D4 /* Photos.framework */; };
-		9D21AAE91C0E20ED00C9A9D4 /* PhotoEditingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.mm */; };
 		9D21AAEC1C0E20ED00C9A9D4 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D21AAEA1C0E20ED00C9A9D4 /* MainInterface.storyboard */; };
 		9D21AAF01C0E20ED00C9A9D4 /* Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9D21AAE01C0E20ED00C9A9D4 /* Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		9D21AAFB1C0E231C00C9A9D4 /* FlareDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAF81C0E231C00C9A9D4 /* FlareDetector.cpp */; };
-		9D21AAFF1C0E233500C9A9D4 /* FlareInpainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.cpp */; };
+		9D21AAFB1C0E231C00C9A9D4 /* FlareDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAF81C0E231C00C9A9D4 /* FlareDetector.mm */; };
+		9D21AAFF1C0E233500C9A9D4 /* FlareInpainter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.mm */; };
 		9D21AB0A1C0E2CA100C9A9D4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */; };
 		9D3DF6981C0E553900D051FE /* CVHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */; };
+		9D641A711D7B7DA8001DB9B8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */; };
+		9D641A721D7B7DD3001DB9B8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */; };
+		9D7DBFB51D7B681000573E55 /* PhotoEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7DBFB41D7B681000573E55 /* PhotoEditingViewController.swift */; };
+		9D7DBFB81D7B6EB500573E55 /* FlareDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D21AAF91C0E231C00C9A9D4 /* FlareDetector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D7DBFB91D7B6EB900573E55 /* FlareInpainter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D21AAFD1C0E233500C9A9D4 /* FlareInpainter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D905B521D7930E100034B9F /* FlareProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D905B501D7930E100034B9F /* FlareProcessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D905B561D7930E100034B9F /* FlareProcessor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9D905B4E1D7930E000034B9F /* FlareProcessor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9D905B5B1D79313400034B9F /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCAF7091C0F7850001D7C57 /* opencv2.framework */; };
+		9D905B5C1D79313F00034B9F /* FlareProcessor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D905B4E1D7930E000034B9F /* FlareProcessor.framework */; };
 		9DA32B581C120FA600F66F2A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */; };
 		9DA32B591C120FD500F66F2A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */; };
-		9DCAF70B1C0F7850001D7C57 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCAF7091C0F7850001D7C57 /* opencv2.framework */; };
+		9DC9948A1D7B567D00DC6975 /* FlareDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAF81C0E231C00C9A9D4 /* FlareDetector.mm */; };
+		9DC9948B1D7B567D00DC6975 /* FlareInpainter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.mm */; };
+		9DC9948C1D7B567D00DC6975 /* CVHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */; };
+		9DC994BC1D7B679E00DC6975 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC994BB1D7B679E00DC6975 /* AppDelegate.swift */; };
+		9DC994BE1D7B67C500DC6975 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC994BD1D7B67C500DC6975 /* ViewController.swift */; };
 		9DFDAFD51C0E84EF002CA623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */; };
 		9DFDAFD61C0E84EF002CA623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */; };
 		9DFDAFD81C0E8E3C002CA623 /* aperture.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DFDAFD71C0E8E3C002CA623 /* aperture.png */; };
@@ -36,6 +45,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9D21AADF1C0E20ED00C9A9D4;
 			remoteInfo = Extension;
+		};
+		9D905B531D7930E100034B9F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D21AABA1C0E20E300C9A9D4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D905B4D1D7930E000034B9F;
+			remoteInfo = FlareProcessor;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -51,33 +67,43 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9D905B5A1D7930E100034B9F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9D905B561D7930E100034B9F /* FlareProcessor.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9D21AAC21C0E20E300C9A9D4 /* UnFlare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnFlare.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D21AAC61C0E20E300C9A9D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9D21AAC81C0E20E300C9A9D4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		9D21AAC91C0E20E300C9A9D4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9D21AACB1C0E20E300C9A9D4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9D21AACC1C0E20E300C9A9D4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9D21AACF1C0E20E300C9A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D21AAD61C0E20E300C9A9D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D21AAE01C0E20ED00C9A9D4 /* Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Extension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D21AAE21C0E20ED00C9A9D4 /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
 		9D21AAE41C0E20ED00C9A9D4 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
-		9D21AAE71C0E20ED00C9A9D4 /* PhotoEditingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoEditingViewController.h; sourceTree = "<group>"; };
-		9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhotoEditingViewController.mm; sourceTree = "<group>"; };
 		9D21AAEB1C0E20ED00C9A9D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		9D21AAED1C0E20ED00C9A9D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9D21AAF81C0E231C00C9A9D4 /* FlareDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FlareDetector.cpp; path = Processing/FlareDetector.cpp; sourceTree = "<group>"; };
-		9D21AAF91C0E231C00C9A9D4 /* FlareDetector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FlareDetector.hpp; path = Processing/FlareDetector.hpp; sourceTree = "<group>"; };
-		9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FlareInpainter.cpp; path = Processing/FlareInpainter.cpp; sourceTree = "<group>"; };
-		9D21AAFD1C0E233500C9A9D4 /* FlareInpainter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FlareInpainter.hpp; path = Processing/FlareInpainter.hpp; sourceTree = "<group>"; };
+		9D21AAF81C0E231C00C9A9D4 /* FlareDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FlareDetector.mm; path = ../Processing/FlareDetector.mm; sourceTree = "<group>"; };
+		9D21AAF91C0E231C00C9A9D4 /* FlareDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlareDetector.h; path = ../Processing/FlareDetector.h; sourceTree = "<group>"; };
+		9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FlareInpainter.mm; path = ../Processing/FlareInpainter.mm; sourceTree = "<group>"; };
+		9D21AAFD1C0E233500C9A9D4 /* FlareInpainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlareInpainter.h; path = ../Processing/FlareInpainter.h; sourceTree = "<group>"; };
 		9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CVHelpers.mm; path = ../Processing/CVHelpers.mm; sourceTree = "<group>"; };
-		9D3DF6971C0E442200D051FE /* CVHelpers.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; name = CVHelpers.hpp; path = ../Processing/CVHelpers.hpp; sourceTree = "<group>"; };
-		9DCAF7091C0F7850001D7C57 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		9D3DF6971C0E442200D051FE /* CVHelpers.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; name = CVHelpers.h; path = ../Processing/CVHelpers.h; sourceTree = "<group>"; };
+		9D7DBFB41D7B681000573E55 /* PhotoEditingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoEditingViewController.swift; sourceTree = "<group>"; };
+		9D905B4E1D7930E000034B9F /* FlareProcessor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlareProcessor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D905B501D7930E100034B9F /* FlareProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlareProcessor.h; sourceTree = "<group>"; };
+		9D905B511D7930E100034B9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DC994BB1D7B679E00DC6975 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9DC994BD1D7B67C500DC6975 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9DCAF7091C0F7850001D7C57 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv2.framework; sourceTree = "<group>"; };
 		9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		9DFDAFD71C0E8E3C002CA623 /* aperture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aperture.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,11 +121,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D905B5C1D79313F00034B9F /* FlareProcessor.framework in Frameworks */,
 				9DA32B591C120FD500F66F2A /* UIKit.framework in Frameworks */,
 				9DA32B581C120FA600F66F2A /* CoreGraphics.framework in Frameworks */,
-				9DCAF70B1C0F7850001D7C57 /* opencv2.framework in Frameworks */,
 				9D21AAE31C0E20ED00C9A9D4 /* PhotosUI.framework in Frameworks */,
 				9D21AAE51C0E20ED00C9A9D4 /* Photos.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D905B4A1D7930E000034B9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D641A721D7B7DD3001DB9B8 /* CoreGraphics.framework in Frameworks */,
+				9D641A711D7B7DA8001DB9B8 /* UIKit.framework in Frameworks */,
+				9D905B5B1D79313400034B9F /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,9 +145,9 @@
 		9D21AAB91C0E20E300C9A9D4 = {
 			isa = PBXGroup;
 			children = (
-				9D21AB001C0E233800C9A9D4 /* Processing */,
 				9D21AAC41C0E20E300C9A9D4 /* UnFlare */,
 				9D21AAE61C0E20ED00C9A9D4 /* Extension */,
+				9D905B4F1D7930E000034B9F /* FlareProcessor */,
 				9D21AAE11C0E20ED00C9A9D4 /* Frameworks */,
 				9D21AAC31C0E20E300C9A9D4 /* Products */,
 			);
@@ -122,6 +158,7 @@
 			children = (
 				9D21AAC21C0E20E300C9A9D4 /* UnFlare.app */,
 				9D21AAE01C0E20ED00C9A9D4 /* Extension.appex */,
+				9D905B4E1D7930E000034B9F /* FlareProcessor.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,30 +167,18 @@
 			isa = PBXGroup;
 			children = (
 				9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */,
-				9D21AAC81C0E20E300C9A9D4 /* AppDelegate.h */,
-				9D21AAC91C0E20E300C9A9D4 /* AppDelegate.m */,
-				9D21AACB1C0E20E300C9A9D4 /* ViewController.h */,
-				9D21AACC1C0E20E300C9A9D4 /* ViewController.m */,
+				9DC994BB1D7B679E00DC6975 /* AppDelegate.swift */,
+				9DC994BD1D7B67C500DC6975 /* ViewController.swift */,
 				9D21AACE1C0E20E300C9A9D4 /* Main.storyboard */,
 				9DFDAFD71C0E8E3C002CA623 /* aperture.png */,
 				9D21AAD61C0E20E300C9A9D4 /* Info.plist */,
-				9D21AAC51C0E20E300C9A9D4 /* Supporting Files */,
 			);
 			path = UnFlare;
-			sourceTree = "<group>";
-		};
-		9D21AAC51C0E20E300C9A9D4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				9D21AAC61C0E20E300C9A9D4 /* main.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		9D21AAE11C0E20ED00C9A9D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9DCAF7091C0F7850001D7C57 /* opencv2.framework */,
 				9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */,
 				9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */,
 				9D21AAE21C0E20ED00C9A9D4 /* PhotosUI.framework */,
@@ -165,28 +190,43 @@
 		9D21AAE61C0E20ED00C9A9D4 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				9D3DF6971C0E442200D051FE /* CVHelpers.hpp */,
-				9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */,
-				9D21AAE71C0E20ED00C9A9D4 /* PhotoEditingViewController.h */,
-				9D21AAE81C0E20ED00C9A9D4 /* PhotoEditingViewController.mm */,
+				9D7DBFB41D7B681000573E55 /* PhotoEditingViewController.swift */,
 				9D21AAEA1C0E20ED00C9A9D4 /* MainInterface.storyboard */,
 				9D21AAED1C0E20ED00C9A9D4 /* Info.plist */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		9D21AB001C0E233800C9A9D4 /* Processing */ = {
+		9D905B4F1D7930E000034B9F /* FlareProcessor */ = {
 			isa = PBXGroup;
 			children = (
-				9D21AAF91C0E231C00C9A9D4 /* FlareDetector.hpp */,
-				9D21AAF81C0E231C00C9A9D4 /* FlareDetector.cpp */,
-				9D21AAFD1C0E233500C9A9D4 /* FlareInpainter.hpp */,
-				9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.cpp */,
+				9DCAF7091C0F7850001D7C57 /* opencv2.framework */,
+				9D21AAF91C0E231C00C9A9D4 /* FlareDetector.h */,
+				9D21AAF81C0E231C00C9A9D4 /* FlareDetector.mm */,
+				9D21AAFD1C0E233500C9A9D4 /* FlareInpainter.h */,
+				9D21AAFC1C0E233500C9A9D4 /* FlareInpainter.mm */,
+				9D905B501D7930E100034B9F /* FlareProcessor.h */,
+				9D3DF6971C0E442200D051FE /* CVHelpers.h */,
+				9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */,
+				9D905B511D7930E100034B9F /* Info.plist */,
 			);
-			name = Processing;
+			path = FlareProcessor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		9D905B4B1D7930E000034B9F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D905B521D7930E100034B9F /* FlareProcessor.h in Headers */,
+				9D7DBFB81D7B6EB500573E55 /* FlareDetector.h in Headers */,
+				9D7DBFB91D7B6EB900573E55 /* FlareInpainter.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		9D21AAC11C0E20E300C9A9D4 /* UnFlare */ = {
@@ -197,11 +237,13 @@
 				9D21AABF1C0E20E300C9A9D4 /* Frameworks */,
 				9D21AAC01C0E20E300C9A9D4 /* Resources */,
 				9D21AAF41C0E20ED00C9A9D4 /* Embed App Extensions */,
+				9D905B5A1D7930E100034B9F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				9D21AAEF1C0E20ED00C9A9D4 /* PBXTargetDependency */,
+				9D905B541D7930E100034B9F /* PBXTargetDependency */,
 			);
 			name = UnFlare;
 			productName = UnFlare;
@@ -225,6 +267,24 @@
 			productReference = 9D21AAE01C0E20ED00C9A9D4 /* Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		9D905B4D1D7930E000034B9F /* FlareProcessor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9D905B591D7930E100034B9F /* Build configuration list for PBXNativeTarget "FlareProcessor" */;
+			buildPhases = (
+				9D905B491D7930E000034B9F /* Sources */,
+				9D905B4A1D7930E000034B9F /* Frameworks */,
+				9D905B4B1D7930E000034B9F /* Headers */,
+				9D905B4C1D7930E000034B9F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlareProcessor;
+			productName = FlareProcessor;
+			productReference = 9D905B4E1D7930E000034B9F /* FlareProcessor.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -237,10 +297,17 @@
 					9D21AAC11C0E20E300C9A9D4 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = X7PK9KM765;
+						LastSwiftMigration = 0800;
 					};
 					9D21AADF1C0E20ED00C9A9D4 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = X7PK9KM765;
+						LastSwiftMigration = 0800;
+					};
+					9D905B4D1D7930E000034B9F = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = X7PK9KM765;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -259,6 +326,7 @@
 			targets = (
 				9D21AAC11C0E20E300C9A9D4 /* UnFlare */,
 				9D21AADF1C0E20ED00C9A9D4 /* Extension */,
+				9D905B4D1D7930E000034B9F /* FlareProcessor */,
 			);
 		};
 /* End PBXProject section */
@@ -284,6 +352,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9D905B4C1D7930E000034B9F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -291,9 +366,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D21AACD1C0E20E300C9A9D4 /* ViewController.m in Sources */,
-				9D21AACA1C0E20E300C9A9D4 /* AppDelegate.m in Sources */,
-				9D21AAC71C0E20E300C9A9D4 /* main.m in Sources */,
+				9DC994BC1D7B679E00DC6975 /* AppDelegate.swift in Sources */,
+				9DC994BE1D7B67C500DC6975 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,10 +375,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D21AAFB1C0E231C00C9A9D4 /* FlareDetector.cpp in Sources */,
-				9D21AAFF1C0E233500C9A9D4 /* FlareInpainter.cpp in Sources */,
+				9D21AAFB1C0E231C00C9A9D4 /* FlareDetector.mm in Sources */,
+				9D21AAFF1C0E233500C9A9D4 /* FlareInpainter.mm in Sources */,
+				9D7DBFB51D7B681000573E55 /* PhotoEditingViewController.swift in Sources */,
 				9D3DF6981C0E553900D051FE /* CVHelpers.mm in Sources */,
-				9D21AAE91C0E20ED00C9A9D4 /* PhotoEditingViewController.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D905B491D7930E000034B9F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DC9948A1D7B567D00DC6975 /* FlareDetector.mm in Sources */,
+				9DC9948B1D7B567D00DC6975 /* FlareInpainter.mm in Sources */,
+				9DC9948C1D7B567D00DC6975 /* CVHelpers.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +399,11 @@
 			isa = PBXTargetDependency;
 			target = 9D21AADF1C0E20ED00C9A9D4 /* Extension */;
 			targetProxy = 9D21AAEE1C0E20ED00C9A9D4 /* PBXContainerItemProxy */;
+		};
+		9D905B541D7930E100034B9F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D905B4D1D7930E000034B9F /* FlareProcessor */;
+			targetProxy = 9D905B531D7930E100034B9F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -429,8 +518,10 @@
 		9D21AADA1C0E20E300C9A9D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = X7PK9KM765;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -442,14 +533,18 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.nexan.apps.GreenDot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		9D21AADB1C0E20E300C9A9D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = X7PK9KM765;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -461,6 +556,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.nexan.apps.GreenDot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -469,6 +565,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -483,6 +580,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -491,6 +590,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -505,6 +605,67 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		9D905B571D7930E100034B9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = X7PK9KM765;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = FlareProcessor/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.nexan.apps.FlareProcessor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		9D905B581D7930E100034B9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = X7PK9KM765;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = FlareProcessor/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.nexan.apps.FlareProcessor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -534,6 +695,15 @@
 			buildConfigurations = (
 				9D21AAF21C0E20ED00C9A9D4 /* Debug */,
 				9D21AAF31C0E20ED00C9A9D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9D905B591D7930E100034B9F /* Build configuration list for PBXNativeTarget "FlareProcessor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9D905B571D7930E100034B9F /* Debug */,
+				9D905B581D7930E100034B9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -6,11 +6,11 @@
 //  Copyright © 2015 floris. All rights reserved.
 //
 
-#include "CVHelpers.hpp"
+#import "CVHelpers.h"
 
 #import <Foundation/Foundation.h>
 
-CGImageRef MatToCGImage(const cv::Mat& image) {
+UIImage *MatToUIImage(const cv::Mat& image, UIImageOrientation orientation) {
     
     NSData *data = [NSData dataWithBytes:image.data
                                   length:image.elemSize()*image.total()];
@@ -48,11 +48,12 @@ CGImageRef MatToCGImage(const cv::Mat& image) {
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
     
-    return imageRef;
+    return [UIImage imageWithCGImage:imageRef scale:1 orientation:orientation];
 }
 
-cv::Mat CGImageToMat(const CGImageRef image) {
+cv::Mat UIImageToMat(const UIImage *uiimage) {
     cv::Mat m;
+    CGImageRef image = uiimage.CGImage;
     
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(image);
     CGFloat cols = CGImageGetWidth(image), rows = CGImageGetHeight(image);

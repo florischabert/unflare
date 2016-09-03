@@ -6,34 +6,52 @@
 //  Copyright © 2015 floris. All rights reserved.
 //
 
-#include "FlareInpainter.hpp"
-
+#import "FlareInpainter.h"
+#import "CVHelpers.h"
 #import <opencv2/opencv.hpp>
 
-FlareInpainter::FlareInpainter(const Parameters &parameters)
-{
-    params = parameters;
+@implementation FlareInpainter {
+    cv::Mat _image;
+    UIImageOrientation _orientation;
+    cv::Mat _mask;
 }
 
-void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpaintedImage)
-{
+- (instancetype)initWithImage:(UIImage*)image mask: (UIImage*)mask {
+    self = [super init];
+    if (self) {
+        _image = UIImageToMat(image);
+        _orientation = image.imageOrientation;
+        _mask = UIImageToMat(mask);
+        _mask.convertTo(_mask, CV_8U);
+    }
+    return self;
+}
+
+- (UIImage*)inpaintTELEAWithRadius:(double)radius {
+    cv::Mat image3;
+    cv::Mat inpaintedImage;
+    
+    cv::cvtColor(_image, image3, cv::COLOR_BGRA2BGR, 3);
+    cv::inpaint(image3, _mask, inpaintedImage, radius, cv::INPAINT_TELEA);
+
+    return MatToUIImage(inpaintedImage, _orientation);
+}
+
+- (UIImage*)inpaintExemplarWithWindowSize:(int)windowSize patchSize:(int)patchSize {
     // Exemplar-based inpainting (A. Criminisi - 2004)
     
-    inpaintedImage = image.clone();
+    cv::Mat inpaintedImage = _image.clone();
     
-    cv::Size patchSize(params.patchSize, params.patchSize);
-    mask.convertTo(mask, CV_8U);
-
     // For each blob in mask
     std::vector<std::vector<cv::Point>> contours;
-    findContours(mask.clone(), contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
+    findContours(_mask.clone(), contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
     
     for (int k = 0; k < contours.size(); k++) {
         // Compute the region of interest
         cv::Rect blobBoundingBox = boundingRect(cv::Mat(contours[k]));
         
-        int windowWidth = cv::max(params.windowSize, blobBoundingBox.size().width);
-        int windowHeight = cv::max(params.windowSize, blobBoundingBox.size().height);
+        int windowWidth = cv::max(windowSize, blobBoundingBox.size().width);
+        int windowHeight = cv::max(windowSize, blobBoundingBox.size().height);
         int extraWidth = windowWidth-blobBoundingBox.size().width;
         int extraHeight = windowHeight-blobBoundingBox.size().width;
         
@@ -41,9 +59,9 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
         blobBoundingBox -= cv::Point(extraWidth/2, extraHeight/2);
 
         cv::Mat regionOfInterestOut = inpaintedImage(blobBoundingBox);
-        cv::Mat regionOfInterest = image(blobBoundingBox);
-        cv::Mat regionFillMask = mask(blobBoundingBox);
-        cv::Mat regionSourceMask = 1 - mask(blobBoundingBox);
+        cv::Mat regionOfInterest = _image(blobBoundingBox);
+        cv::Mat regionFillMask = _mask(blobBoundingBox);
+        cv::Mat regionSourceMask = 1 - _mask(blobBoundingBox);
         
         // Compute gradients
         cv::Mat grayRegion;
@@ -92,18 +110,18 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
 
             double maxPriority = 0;
             cv::Point maxPoint;
-            for(int i = params.patchSize/2; i < laplacian.rows - params.patchSize/2; i++) {
-                for(int j = params.patchSize/2; j < laplacian.cols - params.patchSize/2; j++) {
+            for(int i = patchSize/2; i < laplacian.rows - patchSize/2; i++) {
+                for(int j = patchSize/2; j < laplacian.cols - patchSize/2; j++) {
                     if (laplacian.at<double>(i, j) > 0) {
 
                         // Compute confidence
-                        cv::Point patchCenter(j-params.patchSize/2, i-params.patchSize/2);
-                        cv::Rect patch(patchCenter, patchSize);
+                        cv::Point patchCenter(j-patchSize/2, i-patchSize/2);
+                        cv::Rect patch(patchCenter, cv::Size(patchSize, patchSize));
                         
                         cv::Mat confidencePatch = confidence(patch).mul(regionSourceMaskDouble(patch));
 
                         confidence.at<double>(i,j) = cv::sum(confidencePatch)[0];
-                        confidence.at<double>(i,j) /= params.patchSize * params.patchSize;
+                        confidence.at<double>(i,j) /= patchSize * patchSize;
 
                         // Compute patch priorities
                         double dataTerm = gradX.at<double>(i,j) * sourceGradX.at<double>(i,j);
@@ -126,8 +144,8 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
             }
             
             // Get patch with max priority
-            cv::Point patchCenter(maxPoint.x-params.patchSize/2, maxPoint.y-params.patchSize/2);
-            cv::Rect patch(patchCenter, patchSize);
+            cv::Point patchCenter(maxPoint.x-patchSize/2, maxPoint.y-patchSize/2);
+            cv::Rect patch(patchCenter, cv::Size(patchSize, patchSize));
             
             cv::Mat patchRegion = regionFillMask(patch);
             cv::Mat patchRegionSource = regionSourceMask(patch);
@@ -135,12 +153,12 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
             // Find exemplar that minimize error
             double minError = 1e100;
             cv::Rect bestPatch;
-            for(int i = params.patchSize/2; i < grayRegion.rows - params.patchSize/2; i++) {
-                for(int j = params.patchSize/2; j < grayRegion.cols - params.patchSize/2; j++) {
-                    cv::Point currentPatchCenter(j-params.patchSize/2, i-params.patchSize/2);
-                    cv::Rect currentPatch(currentPatchCenter, patchSize);
+            for(int i = patchSize/2; i < grayRegion.rows - patchSize/2; i++) {
+                for(int j = patchSize/2; j < grayRegion.cols - patchSize/2; j++) {
+                    cv::Point currentPatchCenter(j-patchSize/2, i-patchSize/2);
+                    cv::Rect currentPatch(currentPatchCenter, cv::Size(patchSize, patchSize));
                     
-                    if (cv::countNonZero(regionSourceMask(currentPatch)) != params.patchSize*params.patchSize) {
+                    if (cv::countNonZero(regionSourceMask(currentPatch)) != patchSize*patchSize) {
                         continue;
                     }
                     
@@ -179,30 +197,8 @@ void FlareInpainter::inpaintExemplar(const cv::Mat& image, cv::Mat& mask, cv::Ma
             }
         }
     }
+    
+    return MatToUIImage(inpaintedImage, _orientation);
 }
 
-void FlareInpainter::inpaint(const cv::Mat& image, cv::Mat& mask, cv::Mat& inpaintedImage)
-{
-    cv::Mat image3;
-    cv::cvtColor(image, image3, cv::COLOR_BGRA2BGR, 3);
-
-    if (params.inpaintingType == FlareInpainter::Parameters::inpaintingMask) {
-        image.copyTo(inpaintedImage, cv::Mat::ones(mask.size(), mask.type()) * 1 - mask);
-        return;
-    }
-    
-    if (params.inpaintingType == FlareInpainter::Parameters::inpaintingNS) {
-        cv::inpaint(image3, mask, inpaintedImage, 10, cv::INPAINT_NS);
-        return;
-    }
-    
-    if (params.inpaintingType == FlareInpainter::Parameters::inpaintingTELEA) {
-        cv::inpaint(image3, mask, inpaintedImage, 10, cv::INPAINT_TELEA);
-        return;
-    }
-
-    if (params.inpaintingType == FlareInpainter::Parameters::inpaintingExemplar) {
-        inpaintExemplar(image3, mask, inpaintedImage);
-        return;
-    }
-}
+@end
