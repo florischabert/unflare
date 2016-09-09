@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  defwef
+//  UnFlare
 //
 //  Created by Floris Chabert on 9/3/16.
 //  Copyright © 2016 Floris Chabert. All rights reserved.
