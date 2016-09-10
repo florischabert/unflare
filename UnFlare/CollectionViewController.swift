@@ -10,6 +10,8 @@ import UIKit
 import Photos
 
 // TODO: What if library access not allowed?
+// TODO: Image thumbnail size?
+// TODO: Landscape mode?
 
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
@@ -74,7 +76,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         if segue.identifier == "removeFlare" {
             let cell = sender as! UICollectionViewCell
             let indexPath = collectionView!.indexPath(for: cell)
-            let imageViewController = segue.destination as! ImageViewController
+            let navigationController = segue.destination as! UINavigationController
+            let imageViewController = navigationController.viewControllers.first as! ImageViewController
             imageViewController.asset = assets!.object(at: indexPath!.row)
         }
     }

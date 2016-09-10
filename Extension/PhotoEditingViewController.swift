@@ -31,14 +31,12 @@ class PhotoEditingViewController: UIViewController, PHContentEditingController {
     }
     
     public func finishContentEditing(completionHandler: @escaping (PHContentEditingOutput?) -> Swift.Void) {
-        DispatchQueue.global().async {
-            let output = PHContentEditingOutput(contentEditingInput: self.input!)
-            output.adjustmentData = PHAdjustmentData(formatIdentifier: "UnFlare", formatVersion: "1.0", data: Data())
-            
-            try! UIImageJPEGRepresentation(self.imageView!.image!, 1)?.write(to: output.renderedContentURL)
-            
-            completionHandler(output)
-        }
+        let output = PHContentEditingOutput(contentEditingInput: self.input!)
+        output.adjustmentData = PHAdjustmentData(formatIdentifier: "io.nexan.apps.UnFlare", formatVersion: "1.0", data: "1.0".data(using: .utf8, allowLossyConversion: true)!)
+        
+        try! UIImageJPEGRepresentation(self.imageView!.image!, 0.5)?.write(to: output.renderedContentURL)
+        
+        completionHandler(output)
     }
     
 }

@@ -37,7 +37,7 @@
                                     <constraint firstItem="3dG-K4-PnL" firstAttribute="centerX" secondItem="If3-b6-yCq" secondAttribute="centerX" id="xIh-pz-SsY"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="KfK-cL-rs3" kind="show" identifier="removeFlare" id="ogE-Fe-lmj"/>
+                                    <segue destination="6Uv-Nn-9fu" kind="presentation" identifier="removeFlare" id="ogE-Fe-lmj"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -51,7 +51,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8zp-NL-IYl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="773.60000000000002" y="52.623688155922046"/>
+            <point key="canvasLocation" x="806" y="53"/>
         </scene>
         <!--Photo-->
         <scene sceneID="4zR-rH-YVY">
@@ -75,21 +75,36 @@
                             <constraint firstItem="pD3-QJ-COa" firstAttribute="top" secondItem="IzL-At-dce" secondAttribute="bottom" id="gHQ-gV-501"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo" id="xAq-Cv-jxI">
-                        <barButtonItem key="rightBarButtonItem" title="UnFlare" id="m1J-s8-CN7">
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="deE-lP-dQW"/>
+                        <barButtonItem title="UnFlare" id="aeA-Hl-zNH">
                             <connections>
-                                <action selector="unflare:" destination="KfK-cL-rs3" id="Uuc-e2-Sx7"/>
+                                <action selector="unflare:" destination="KfK-cL-rs3" id="nWd-6R-XyD"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="HmH-6V-8YA"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Photo" id="xAq-Cv-jxI">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="3MO-Kd-JCb">
+                            <connections>
+                                <action selector="cancel:" destination="KfK-cL-rs3" id="rd3-Pv-zJB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="m1J-s8-CN7">
+                            <connections>
+                                <action selector="save:" destination="KfK-cL-rs3" id="fca-dz-5Ox"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="button" destination="m1J-s8-CN7" id="oyi-A3-p2z"/>
                         <outlet property="imageView" destination="IzL-At-dce" id="IJz-TJ-ENn"/>
+                        <outlet property="saveButton" destination="m1J-s8-CN7" id="nAw-Zr-62u"/>
+                        <outlet property="uflareButton" destination="aeA-Hl-zNH" id="WAK-In-luF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N6T-QK-aT6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1493.5999999999999" y="52.623688155922046"/>
+            <point key="canvasLocation" x="2191" y="53"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QIz-QN-rne">
@@ -105,7 +120,29 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4qI-KB-MUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10" y="53"/>
+            <point key="canvasLocation" x="108" y="53"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aGp-Vo-Uxo">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="6Uv-Nn-9fu" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XB6-6m-FEc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Xau-h4-9QD">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="KfK-cL-rs3" kind="relationship" relationship="rootViewController" id="AoJ-18-OpZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MVV-79-ZIe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1493.5999999999999" y="52.623688155922046"/>
         </scene>
     </scenes>
 </document>
