@@ -11,9 +11,9 @@ import FlareProcessor
 
 func processImage(_ image: UIImage) -> UIImage {
     let detector = FlareDetector(image: image);
-    detector?.setThresholdWithStep(10, min: 50, max: 255);
-    detector?.setFilter(.byCircularity, min: 0.4, max: 1);
-    detector?.setFilter(.byArea, min: 400, max: 1500);
+    detector?.setThresholdWithStep(20, min: 100, max: 255);
+    detector?.setFilter(.byCircularity, min: 0.8, max: 1);
+    detector?.setFilter(.byArea, min: 100, max: 2000);
     detector?.setFilter(.byConvexity, min: 0.8, max: 1);
     detector?.setFilter(.byInertia, min: 0.7, max: 1);
     
