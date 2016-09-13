@@ -17,10 +17,8 @@ class ImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        updateImage()
         
-        topButton.title = ""
+        topButton.title = "UnFlare"
         topButton.isEnabled = false
     }
     
@@ -31,14 +29,19 @@ class ImageViewController: UIViewController {
         PHImageManager.default().requestImage(for: asset!, targetSize: CGSize(width: asset!.pixelWidth, height: asset!.pixelHeight), contentMode: .aspectFit, options: options, resultHandler: { result, info in
             DispatchQueue.main.async {
                 self.imageView.image = result
+                if let isDegraded = info?[PHImageResultIsDegradedKey] as? Int {
+                    if isDegraded == 0 {
+                        self.updateButton()
+                    }
+                }
             }
         })
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        self.updateButton()
+        
+        updateImage()
     }
     
     @IBAction func action(_ sender: AnyObject) {
@@ -78,7 +81,14 @@ class ImageViewController: UIViewController {
                     if let _ = input?.adjustmentData {
                         self.updateImage()
                     }
-                    self.updateButton()
+                    if let _ = error {
+                        DispatchQueue.main.async {
+                            self.topButton.isEnabled = true
+                        }
+                    }
+                    else {
+                        self.updateButton()
+                    }
                 })
             })
         }
@@ -89,10 +99,6 @@ class ImageViewController: UIViewController {
 
         asset!.requestContentEditingInput(with: nil) { input, list in
             DispatchQueue.main.async {
-                self.topButton.isEnabled = true
-                
-                print(adjustmentData.formatIdentifier)
-                print(input?.adjustmentData)
                 if input?.adjustmentData?.formatIdentifier == adjustmentData.formatIdentifier &&
                     input?.adjustmentData?.formatVersion == adjustmentData.formatVersion {
                     self.topButton.title = "Revert"
@@ -102,6 +108,7 @@ class ImageViewController: UIViewController {
                     self.topButton.title = "UnFlare"
                     self.topButton.tintColor = UIView().tintColor
                 }
+                self.topButton.isEnabled = true
             }
         }
     }
