@@ -29,6 +29,9 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                 self.updateUI()
             }
         }
+        UIView.setAnimationsEnabled(false)
+        collectionView?.reloadSections([0])
+        UIView.setAnimationsEnabled(true)
     }
     
     func updateUI() {
