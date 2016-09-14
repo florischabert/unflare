@@ -18,20 +18,27 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     var assets: PHFetchResult<PHAsset>?
     var status: PHAuthorizationStatus?
         
+    @IBOutlet weak var collectionButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        collectionView?.reloadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         PHPhotoLibrary.requestAuthorization { status in
             if self.status != status {
                 self.status = status
                 self.updateUI()
             }
         }
-        UIView.setAnimationsEnabled(false)
-        collectionView?.reloadSections([0])
-        UIView.setAnimationsEnabled(true)
     }
     
     func updateUI() {
@@ -82,27 +89,25 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         let asset = assets!.object(at: indexPath.row)
         cell.asset = asset
 
-//        DispatchQueue.global().async {
-            let options = PHImageRequestOptions()
-            options.resizeMode = .exact
-            options.isSynchronous = true
-            
-            let retinaScale = UIScreen.main.scale;
-            let retinaSquare = CGSize(width: 100*retinaScale, height: 100*retinaScale)
+        let options = PHImageRequestOptions()
+        options.resizeMode = .exact
+        options.isSynchronous = true
+        
+        let retinaScale = UIScreen.main.scale;
+        let retinaSquare = CGSize(width: 100*retinaScale, height: 100*retinaScale)
 
-            let cropSideLength = min(asset.pixelWidth, asset.pixelHeight)
-            let x = asset.pixelWidth > asset.pixelHeight ? abs(asset.pixelWidth - asset.pixelHeight) / 2 : 0
-            let y = asset.pixelWidth > asset.pixelHeight ? 0 : abs(asset.pixelWidth - asset.pixelHeight) / 2
-            let square = CGRect(x: x, y: y, width: cropSideLength, height: cropSideLength)
-            let cropRect = square.applying(CGAffineTransform(scaleX: 1.0 / CGFloat(asset.pixelWidth), y: 1.0 / CGFloat(asset.pixelHeight)))
-            options.normalizedCropRect = cropRect
-            
-            PHImageManager.default().requestImage(for: asset, targetSize: retinaSquare, contentMode: .aspectFit, options: options, resultHandler: {(result, info)->Void in
-                DispatchQueue.main.async {
-                    imageView.image = result
-                }
-            })
-//        }
+        let cropSideLength = min(asset.pixelWidth, asset.pixelHeight)
+        let x = asset.pixelWidth > asset.pixelHeight ? abs(asset.pixelWidth - asset.pixelHeight) / 2 : 0
+        let y = asset.pixelWidth > asset.pixelHeight ? 0 : abs(asset.pixelWidth - asset.pixelHeight) / 2
+        let square = CGRect(x: x, y: y, width: cropSideLength, height: cropSideLength)
+        let cropRect = square.applying(CGAffineTransform(scaleX: 1.0 / CGFloat(asset.pixelWidth), y: 1.0 / CGFloat(asset.pixelHeight)))
+        options.normalizedCropRect = cropRect
+        
+        PHImageManager.default().requestImage(for: asset, targetSize: retinaSquare, contentMode: .aspectFit, options: options, resultHandler: {(result, info)->Void in
+            DispatchQueue.main.async {
+                imageView.image = result
+            }
+        })
         
         return cell
     }
@@ -115,4 +120,26 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         }
     }
 
+    @IBAction func changeCollection(_ sender: AnyObject) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+       
+        let allPhotosAction = UIAlertAction(title: "All Photos", style: .cancel) { (action) in
+            
+        }
+        alertController.addAction(allPhotosAction)
+        
+        let userAlbumsOptions = PHFetchOptions()
+        userAlbumsOptions.predicate = NSPredicate(format: "estimatedAssetCount > 0")
+        let userAlbums = PHAssetCollection.fetchAssetCollections(with:.album, subtype:.any, options: userAlbumsOptions)
+        userAlbums.enumerateObjects({ collection, _, _ in
+            let action = UIAlertAction(title: collection.localizedTitle, style: .default) { (action) in
+
+            }
+            alertController.addAction(action)
+        })
+
+        self.present(alertController, animated: true) {
+        }
+    }
+    
 }

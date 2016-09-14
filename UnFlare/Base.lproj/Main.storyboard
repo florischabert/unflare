@@ -2,10 +2,11 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A313a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rum-1b-wwR">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--All Photos-->
+        <!--All Photos ▾-->
         <scene sceneID="rtG-eI-fgM">
             <objects>
                 <viewController id="NQt-SH-sN1" sceneMemberID="viewController">
@@ -27,7 +28,7 @@
                             <constraint firstItem="SNW-xg-GPt" firstAttribute="height" secondItem="suf-yv-E8L" secondAttribute="height" id="nTR-p0-vhw"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="All Photos" id="i6v-QV-bpT"/>
+                    <navigationItem key="navigationItem" title="All Photos ▾" id="i6v-QV-bpT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e1j-YJ-78m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -49,7 +50,7 @@
             </objects>
             <point key="canvasLocation" x="886" y="-627"/>
         </scene>
-        <!--All Photos-->
+        <!--Collection View Controller-->
         <scene sceneID="2ek-31-gbn">
             <objects>
                 <collectionViewController id="2oD-dc-M6Y" customClass="CollectionViewController" customModule="UnFlare" customModuleProvider="target" sceneMemberID="viewController">
@@ -81,7 +82,10 @@
                                     <constraint firstItem="3dG-K4-PnL" firstAttribute="centerX" secondItem="If3-b6-yCq" secondAttribute="centerX" id="xIh-pz-SsY"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="KfK-cL-rs3" kind="show" identifier="Photo" id="MFd-dp-BZ5"/>
+                                    <segue destination="KfK-cL-rs3" kind="show" identifier="Photo" id="MFd-dp-BZ5">
+                                        <segue key="commit" inheritsFrom="parent" id="zjH-K5-q98"/>
+                                        <segue key="preview" inheritsFrom="commit" id="ilR-Qd-7ED"/>
+                                    </segue>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -91,8 +95,22 @@
                         </connections>
                     </collectionView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="All Photos" id="DYN-b4-f2m"/>
+                    <navigationItem key="navigationItem" id="DYN-b4-f2m">
+                        <nil key="title"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PAR-Ym-5xE">
+                            <rect key="frame" x="113" y="6" width="150" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                            <state key="normal" title="All Photos ▾">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="changeCollection:" destination="2oD-dc-M6Y" eventType="touchUpInside" id="dbx-BH-WPV"/>
+                            </connections>
+                        </button>
+                    </navigationItem>
                     <connections>
+                        <outlet property="collectionButton" destination="PAR-Ym-5xE" id="w99-hl-txV"/>
                         <segue destination="6Ue-rg-VZw" kind="show" identifier="Denied" animates="NO" id="iEu-cy-nEK"/>
                     </connections>
                 </collectionViewController>
@@ -159,4 +177,7 @@
     <resources>
         <image name="Denied" width="703" height="554"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="MFd-dp-BZ5"/>
+    </inferredMetricsTieBreakers>
 </document>

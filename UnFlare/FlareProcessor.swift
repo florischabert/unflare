@@ -8,6 +8,18 @@
 
 import UIKit
 import FlareProcessor
+import Photos
+
+extension PHAdjustmentData {
+    static func unflare() -> PHAdjustmentData {
+        return PHAdjustmentData(formatIdentifier: "io.nexan.apps.UnFlare", formatVersion: "1.0", data: "1.0".data(using: .utf8, allowLossyConversion: true)!)
+    }
+    
+    func isUnflare() -> Bool {
+        return formatIdentifier == PHAdjustmentData.unflare().formatIdentifier &&
+            formatVersion == PHAdjustmentData.unflare().formatVersion
+    }
+}
 
 func processImage(_ image: UIImage) -> UIImage {
     let detector = FlareDetector(image: image);
