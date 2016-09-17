@@ -22,6 +22,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupTitle("All Photos")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +51,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             }
         else {
             DispatchQueue.global().async {
+                self.slideTitle("Loading")
+
                 let options = PHFetchOptions()
                 options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
                 self.assets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: options)
@@ -58,6 +62,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                     let lastItem = self.collectionView?.numberOfItems(inSection: 0)
                     let indexPath = IndexPath(item: lastItem!-1, section: 0)
                     self.collectionView?.scrollToItem(at: indexPath, at: .bottom, animated: false)
+                    
+                    self.slideTitle()
                 }
             }
         }

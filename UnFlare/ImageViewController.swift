@@ -27,7 +27,7 @@ class ImageViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 switch self.state {
-                case .disabled: self.topButton.title = "Loading"
+                case .disabled: self.topButton.title = "UnFlare"
                 case .unflare:  self.topButton.title = "UnFlare"
                 case .save:     self.topButton.title = "Save"
                 case .revert:   self.topButton.title = "Revert"
@@ -44,12 +44,24 @@ class ImageViewController: UIViewController {
         state = .disabled
         requestImage({
             self.asset!.requestContentEditingInput(with: nil) { input, info in
+                self.slideTitle()
+                
                 self.state = .unflare
                 if let isUnflare = input?.adjustmentData?.isUnflare(), isUnflare {
                     self.state = .revert
                 }
             }
         })
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupTitle("Photo")
+        
+        if state == .disabled {
+            slideTitle("Loading")
+        }
     }
     
     func requestImage(_ block: @escaping () -> Void) {
@@ -72,16 +84,19 @@ class ImageViewController: UIViewController {
     @IBAction func action(_ sender: AnyObject) {
         switch state {
         case .unflare:
-            let pending = UIAlertController(title: "Unflaring...", message: nil, preferredStyle: .alert)
-            present(pending, animated: true) {
-                let image = processImage(self.imageView.image!)
-                DispatchQueue.main.async {
-                    self.imageView.image = image
-                    pending.dismiss(animated: true)
-                    self.state = .save
-                }
+            self.slideTitle("UnFlaring")
+
+            let image = processImage(self.imageView.image!)
+
+            DispatchQueue.main.async {
+                self.imageView.image = image
+                self.state = .save
+                
+                self.slideTitle()
             }
         case .save:
+            self.slideTitle("Saving")
+
             asset!.requestContentEditingInput(with: nil) { input, list in
                 let output = PHContentEditingOutput(contentEditingInput: input!)
                 output.adjustmentData = PHAdjustmentData.unflare()
@@ -91,16 +106,22 @@ class ImageViewController: UIViewController {
                     let request = PHAssetChangeRequest(for: self.asset!)
                     request.contentEditingOutput = output
                 }, completionHandler: { bool, error in
+                    self.slideTitle()
+
                     if error == nil {
                         self.state = .revert
                     }
                 })
             }
         case .revert:
+            self.slideTitle("Reverting")
+
             PHPhotoLibrary.shared().performChanges({
                 let request = PHAssetChangeRequest(for: self.asset!)
                 request.revertAssetContentToOriginal()
             }, completionHandler: { bool, error in
+                self.slideTitle()
+
                 if error == nil {
                     self.state = .unflare
                     self.requestImage() {}

@@ -32,6 +32,7 @@
 		9DDEBC271D824AC600189154 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEBC261D824AC600189154 /* ImageViewController.swift */; };
 		9DDEBC291D82581E00189154 /* FlareProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEBC281D82581E00189154 /* FlareProcessor.swift */; };
 		9DDEBC2A1D82590800189154 /* FlareProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDEBC281D82581E00189154 /* FlareProcessor.swift */; };
+		9DF0081E1D8CD588004CAA54 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF0081D1D8CD588004CAA54 /* UIExtensions.swift */; };
 		9DFDAFD51C0E84EF002CA623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */; };
 		9DFDAFD61C0E84EF002CA623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -104,6 +105,7 @@
 		9DCAF7091C0F7850001D7C57 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv2.framework; sourceTree = "<group>"; };
 		9DDEBC261D824AC600189154 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		9DDEBC281D82581E00189154 /* FlareProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlareProcessor.swift; sourceTree = "<group>"; };
+		9DF0081D1D8CD588004CAA54 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		9DFDAFD41C0E84EF002CA623 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +172,7 @@
 				9DC994BD1D7B67C500DC6975 /* CollectionViewController.swift */,
 				9DDEBC261D824AC600189154 /* ImageViewController.swift */,
 				9DDEBC281D82581E00189154 /* FlareProcessor.swift */,
+				9DF0081D1D8CD588004CAA54 /* UIExtensions.swift */,
 				9D21AACE1C0E20E300C9A9D4 /* Main.storyboard */,
 				9D21AAD61C0E20E300C9A9D4 /* Info.plist */,
 			);
@@ -367,6 +370,7 @@
 				9DC994BC1D7B679E00DC6975 /* AppDelegate.swift in Sources */,
 				9DDEBC291D82581E00189154 /* FlareProcessor.swift in Sources */,
 				9DDEBC271D824AC600189154 /* ImageViewController.swift in Sources */,
+				9DF0081E1D8CD588004CAA54 /* UIExtensions.swift in Sources */,
 				9DC994BE1D7B67C500DC6975 /* CollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
