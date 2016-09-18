@@ -10,11 +10,11 @@ import UIKit
 
 extension UIViewController {
     
-    func setupTitle(_ text: String) {
-        let titleLabelView = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+    func setupTitle(_ text: String, color: UIColor = UIColor.black) {
+        let titleLabelView = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
         titleLabelView.backgroundColor = UIColor.clear
         titleLabelView.textAlignment = .center;
-        titleLabelView.textColor = UIColor.black
+        titleLabelView.textColor = color
         titleLabelView.font = UIFont.boldSystemFont(ofSize: 17)
         titleLabelView.adjustsFontSizeToFitWidth = true
         titleLabelView.text = text
@@ -28,8 +28,7 @@ extension UIViewController {
     func slideTitle(_ text: String? = nil) {
         let animation = CATransition()
         animation.duration = 0.2
-        animation.type = kCATransitionPush;
-        animation.subtype = kCATransitionFromTop;
+        animation.type = kCATransitionFade;
         animation.timingFunction = CAMediaTimingFunction(name: "easeInEaseOut")
         
         DispatchQueue.main.async {

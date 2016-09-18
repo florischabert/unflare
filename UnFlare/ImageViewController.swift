@@ -12,63 +12,62 @@ import Photos
 class ImageViewController: UIViewController {
     
     var asset: PHAsset?
+    var input: PHContentEditingInput?
+    var processedImage: UIImage?
+    var adjustmentData: PHAdjustmentData? {
+        didSet {
+            DispatchQueue.main.async {
+                if self.adjustmentData?.isUnflare() ?? false {
+                    self.topButton.tintColor = self.view.tintColor
+                }
+                else {
+                    self.topButton.tintColor = UIColor.white
+                }
+            }
+        }
+    }
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var topButton: UIBarButtonItem!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupTitle("", color: UIColor.white)
     }
 
-    enum State {
-        case disabled, unflare, save, revert
-    }
-    
-    var state: State = .disabled {
-        didSet {
-            DispatchQueue.main.async {
-                switch self.state {
-                case .disabled: self.topButton.title = "UnFlare"
-                case .unflare:  self.topButton.title = "UnFlare"
-                case .save:     self.topButton.title = "Save"
-                case .revert:   self.topButton.title = "Revert"
-                }
-                self.topButton.isEnabled = self.state != .disabled
-                self.topButton.tintColor = self.state == .revert ? .red : self.view.tintColor
-            }
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        state = .disabled
-        requestImage({
-            self.asset!.requestContentEditingInput(with: nil) { input, info in
-                self.slideTitle()
-                
-                self.state = .unflare
-                if let isUnflare = input?.adjustmentData?.isUnflare(), isUnflare {
-                    self.state = .revert
-                }
+        slideTitle("Loading photo...")
+        
+        requestImage() {
+            let options = PHContentEditingInputRequestOptions()
+            options.canHandleAdjustmentData = { adjustment in
+                return adjustment.isUnflare()
             }
-        })
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        setupTitle("Photo")
-        
-        if state == .disabled {
-            slideTitle("Loading")
+            self.asset!.requestContentEditingInput(with: options) { input, info in
+                self.input = input
+                
+                self.slideTitle()
+                self.topButton.isEnabled = true
+                self.adjustmentData = input?.adjustmentData
+            }
         }
     }
     
-    func requestImage(_ block: @escaping () -> Void) {
+    func requestImage(_ version: PHImageRequestOptionsVersion = .current, block: @escaping () -> Void) {
         let options = PHImageRequestOptions()
         options.isNetworkAccessAllowed = true
+        options.version = version
+        
+        print(version.rawValue)
         
         PHImageManager.default().requestImage(for: asset!, targetSize: CGSize(width: asset!.pixelWidth, height: asset!.pixelHeight), contentMode: .aspectFit, options: options, resultHandler: { result, info in
+            
+            print(result)
+            print(info)
             DispatchQueue.main.async {
                 self.imageView.image = result
                 
@@ -82,54 +81,69 @@ class ImageViewController: UIViewController {
     }
     
     @IBAction func action(_ sender: AnyObject) {
-        switch state {
-        case .unflare:
-            self.slideTitle("UnFlaring")
-
-            let image = processImage(self.imageView.image!)
-
-            DispatchQueue.main.async {
-                self.imageView.image = image
-                self.state = .save
-                
+        self.topButton.isEnabled = false
+        self.doneButton.isEnabled = false
+        
+        if adjustmentData?.isUnflare() ?? false {
+            self.slideTitle("Reverting photo...")
+            
+            requestImage(.unadjusted) {
                 self.slideTitle()
+                self.adjustmentData = nil
+                self.topButton.isEnabled = true
+                self.doneButton.isEnabled = true
             }
-        case .save:
-            self.slideTitle("Saving")
-
-            asset!.requestContentEditingInput(with: nil) { input, list in
-                let output = PHContentEditingOutput(contentEditingInput: input!)
-                output.adjustmentData = PHAdjustmentData.unflare()
-                try! UIImageJPEGRepresentation(self.imageView!.image!, 1)?.write(to: output.renderedContentURL)
-                
-                PHPhotoLibrary.shared().performChanges({
-                    let request = PHAssetChangeRequest(for: self.asset!)
-                    request.contentEditingOutput = output
-                }, completionHandler: { bool, error in
-                    self.slideTitle()
-
-                    if error == nil {
-                        self.state = .revert
-                    }
-                })
-            }
-        case .revert:
-            self.slideTitle("Reverting")
-
-            PHPhotoLibrary.shared().performChanges({
-                let request = PHAssetChangeRequest(for: self.asset!)
-                request.revertAssetContentToOriginal()
-            }, completionHandler: { bool, error in
-                self.slideTitle()
-
-                if error == nil {
-                    self.state = .unflare
-                    self.requestImage() {}
-                }
-            })
-        default: break
         }
-
+        else {
+            DispatchQueue.global().async {
+                self.slideTitle("UnFlaring photo...")
+                
+                if self.processedImage == nil {
+                    self.processedImage = processImage(self.imageView.image!)
+                }
+                
+                self.slideTitle()
+                
+                DispatchQueue.main.async {
+                    self.adjustmentData = PHAdjustmentData.unflare()
+                    self.topButton.isEnabled = true
+                    self.imageView.image = self.processedImage
+                    self.doneButton.isEnabled = true
+                }
+            }
+        }
     }
     
+    @IBAction func cancel(_ sender: AnyObject) {
+        dismiss(animated: true)
+    }
+    
+    @IBAction func done(_ sender: AnyObject) {
+        doneButton.isEnabled = false
+        
+        if (input?.adjustmentData?.isUnflare() ?? false) == (adjustmentData?.isUnflare() ?? false) {
+            dismiss(animated: true)
+            return
+        }
+        
+        let output = PHContentEditingOutput(contentEditingInput: input!)
+        output.adjustmentData = self.adjustmentData
+        try! UIImageJPEGRepresentation(self.imageView!.image!, 1)?.write(to: output.renderedContentURL)
+
+        PHPhotoLibrary.shared().performChanges({
+            let request = PHAssetChangeRequest(for: self.asset!)
+            
+            if self.adjustmentData == nil {
+                output.adjustmentData = PHAdjustmentData(formatIdentifier: "identity", formatVersion: "0", data: "0".data(using: .utf8, allowLossyConversion: true)!)
+                request.contentEditingOutput = output
+            }
+            else {
+                request.contentEditingOutput = output
+            }
+        }, completionHandler: { bool, error in
+            DispatchQueue.main.async {
+                self.dismiss(animated: true)
+            }
+        })
+    }
 }

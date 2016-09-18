@@ -51,7 +51,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             }
         else {
             DispatchQueue.global().async {
-                self.slideTitle("Loading")
+                self.slideTitle("Loading...")
 
                 let options = PHFetchOptions()
                 options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
@@ -82,6 +82,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
     
     func collectionView(_ collection: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let photosPerRow = UIDevice.current.orientation.isLandscape ? 8 : 4
+
         var size = view.bounds.size.width/4
         if indexPath.row % 4 != 3  {
             size -= 1
@@ -121,7 +123,8 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Photo" {
             let cell = sender as! ViewCell
-            let imageViewController = segue.destination as! ImageViewController
+            let navigationController = segue.destination as! UINavigationController
+            let imageViewController = navigationController.viewControllers.first as! ImageViewController
             imageViewController.asset = cell.asset
         }
     }
@@ -146,6 +149,10 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
 
         self.present(alertController, animated: true) {
         }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView?.reloadData()
     }
     
 }
