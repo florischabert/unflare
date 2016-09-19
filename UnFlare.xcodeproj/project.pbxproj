@@ -15,6 +15,7 @@
 		9D21AB0A1C0E2CA100C9A9D4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */; };
 		9D641A711D7B7DA8001DB9B8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB091C0E2CA100C9A9D4 /* UIKit.framework */; };
 		9D641A721D7B7DD3001DB9B8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */; };
+		9D6A313D1D8F9F1F00E156CF /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D6A313C1D8F9F1E00E156CF /* Launch Screen.storyboard */; };
 		9D7DBFB51D7B681000573E55 /* PhotoEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7DBFB41D7B681000573E55 /* PhotoEditingViewController.swift */; };
 		9D7DBFB81D7B6EB500573E55 /* FlareDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D21AAF91C0E231C00C9A9D4 /* FlareDetector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9D7DBFB91D7B6EB900573E55 /* FlareInpainter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D21AAFD1C0E233500C9A9D4 /* FlareInpainter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -96,6 +97,7 @@
 		9D21AB0B1C0E2CA600C9A9D4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9D3DF6951C0E43FA00D051FE /* CVHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CVHelpers.mm; path = ../Processing/CVHelpers.mm; sourceTree = "<group>"; };
 		9D3DF6971C0E442200D051FE /* CVHelpers.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; name = CVHelpers.h; path = ../Processing/CVHelpers.h; sourceTree = "<group>"; };
+		9D6A313C1D8F9F1E00E156CF /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		9D7DBFB41D7B681000573E55 /* PhotoEditingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoEditingViewController.swift; sourceTree = "<group>"; };
 		9D905B4E1D7930E000034B9F /* FlareProcessor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlareProcessor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D905B501D7930E100034B9F /* FlareProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlareProcessor.h; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				9DDEBC281D82581E00189154 /* FlareProcessor.swift */,
 				9DF0081D1D8CD588004CAA54 /* UIExtensions.swift */,
 				9D21AACE1C0E20E300C9A9D4 /* Main.storyboard */,
+				9D6A313C1D8F9F1E00E156CF /* Launch Screen.storyboard */,
 				9D21AAD61C0E20E300C9A9D4 /* Info.plist */,
 			);
 			path = UnFlare;
@@ -339,6 +342,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D6A313D1D8F9F1F00E156CF /* Launch Screen.storyboard in Resources */,
 				9DFDAFD51C0E84EF002CA623 /* Assets.xcassets in Resources */,
 				9D21AAD01C0E20E300C9A9D4 /* Main.storyboard in Resources */,
 			);

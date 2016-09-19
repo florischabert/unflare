@@ -70,7 +70,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -82,13 +82,12 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
     
     func collectionView(_ collection: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let photosPerRow = UIDevice.current.orientation.isLandscape ? 8 : 4
+        let photosPerRow = UIDevice.current.orientation.isLandscape ? 6 : 4
 
-        var size = view.bounds.size.width/4
-        if indexPath.row % 4 != 3  {
-            size -= 1
-        }
-        return CGSize(width: size, height: size)
+        let size = Int(view.bounds.size.width)/photosPerRow
+        let remainer = Int(view.bounds.size.width) % photosPerRow
+        let width = indexPath.row % photosPerRow != photosPerRow-1 ? size-1 : size + remainer
+        return CGSize(width: width, height: size)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -129,30 +128,24 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         }
     }
 
-    @IBAction func changeCollection(_ sender: AnyObject) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-       
-        let allPhotosAction = UIAlertAction(title: "All Photos", style: .cancel) { (action) in
-            
-        }
-        alertController.addAction(allPhotosAction)
-        
-        let userAlbumsOptions = PHFetchOptions()
-        userAlbumsOptions.predicate = NSPredicate(format: "estimatedAssetCount > 0")
-        let userAlbums = PHAssetCollection.fetchAssetCollections(with:.album, subtype:.any, options: userAlbumsOptions)
-        userAlbums.enumerateObjects({ collection, _, _ in
-            let action = UIAlertAction(title: collection.localizedTitle, style: .default) { (action) in
-
-            }
-            alertController.addAction(action)
-        })
-
-        self.present(alertController, animated: true) {
-        }
-    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        collectionView?.reloadData()
+        
+        let indexPath = collectionView?.indexPathsForVisibleItems.first
+
+        coordinator.animate(alongsideTransition: { _ in
+            self.collectionView?.reloadData()
+            DispatchQueue.main.async {
+                if let indexPath = indexPath {
+                    self.collectionView?.scrollToItem(at: indexPath, at: .top, animated: false)
+                }
+            }
+        }, completion: { _ in
+            DispatchQueue.main.async {
+                if let indexPath = indexPath {
+                    self.collectionView?.scrollToItem(at: indexPath, at: .top, animated: false)
+                }
+            }
+        })
     }
     
 }
