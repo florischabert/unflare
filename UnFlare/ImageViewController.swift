@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class ImageViewController: UIViewController {
+class ImageViewController: UIViewController, ZoomTransitionProtocol {
     
     var asset: PHAsset?
     var input: PHContentEditingInput?
@@ -18,10 +18,10 @@ class ImageViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 if self.adjustmentData?.isUnflare() ?? false {
-                    self.topButton.tintColor = self.view.tintColor
+                    self.topButton.tintColor = UIColor.orange
                 }
                 else {
-                    self.topButton.tintColor = UIColor.white
+                    self.topButton.tintColor = self.view.tintColor
                 }
             }
         }
@@ -29,32 +29,34 @@ class ImageViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var topButton: UIBarButtonItem!
-    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTitle("", color: UIColor.white)
-    }
+        let options = PHImageRequestOptions()
+        options.isNetworkAccessAllowed = false
+        options.isSynchronous = true
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        slideTitle("Loading photo...")
-        
-        requestImage() {
-            let options = PHContentEditingInputRequestOptions()
-            options.canHandleAdjustmentData = { adjustment in
-                return adjustment.isUnflare()
-            }
-            self.asset!.requestContentEditingInput(with: options) { input, info in
-                self.input = input
-                
-                self.slideTitle()
-                self.topButton.isEnabled = true
-                self.adjustmentData = input?.adjustmentData
-            }
-        }
+        PHImageManager.default().requestImage(for: asset!, targetSize: CGSize(width: asset!.pixelWidth, height: asset!.pixelHeight), contentMode: .aspectFit, options: options, resultHandler: { result, info in
+            self.imageView.image = result
+        })
+    
+//        requestImage() {
+//            let options = PHContentEditingInputRequestOptions()
+//            options.canHandleAdjustmentData = { adjustment in
+//                return adjustment.isUnflare()
+//            }
+//            self.asset!.requestContentEditingInput(with: options) { input, info in
+//                self.input = input
+//                
+//                self.topButton.isEnabled = true
+//                self.adjustmentData = input?.adjustmentData
+//            }
+//        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setToolbarHidden(true, animated: true)
     }
     
     func requestImage(_ version: PHImageRequestOptionsVersion = .current, block: @escaping () -> Void) {
@@ -62,16 +64,11 @@ class ImageViewController: UIViewController {
         options.isNetworkAccessAllowed = true
         options.version = version
         
-        print(version.rawValue)
-        
         PHImageManager.default().requestImage(for: asset!, targetSize: CGSize(width: asset!.pixelWidth, height: asset!.pixelHeight), contentMode: .aspectFit, options: options, resultHandler: { result, info in
-            
-            print(result)
-            print(info)
             DispatchQueue.main.async {
                 self.imageView.image = result
-                
-                if let isDegraded = info?[PHImageResultIsDegradedKey] as? Int {
+
+                if let isDegraded = info?[PHImageResultIsDegradedKey] as? NSNumber {
                     if isDegraded == 0 {
                         block()
                     }
@@ -82,46 +79,32 @@ class ImageViewController: UIViewController {
     
     @IBAction func action(_ sender: AnyObject) {
         self.topButton.isEnabled = false
-        self.doneButton.isEnabled = false
         
         if adjustmentData?.isUnflare() ?? false {
-            self.slideTitle("Reverting photo...")
-            
             requestImage(.unadjusted) {
-                self.slideTitle()
                 self.adjustmentData = nil
                 self.topButton.isEnabled = true
-                self.doneButton.isEnabled = true
             }
         }
         else {
             DispatchQueue.global().async {
-                self.slideTitle("UnFlaring photo...")
-                
                 if self.processedImage == nil {
                     self.processedImage = processImage(self.imageView.image!)
                 }
-                
-                self.slideTitle()
                 
                 DispatchQueue.main.async {
                     self.adjustmentData = PHAdjustmentData.unflare()
                     self.topButton.isEnabled = true
                     self.imageView.image = self.processedImage
-                    self.doneButton.isEnabled = true
+                    self.navigationController?.setToolbarHidden(false, animated: true)
                 }
             }
         }
     }
     
-    @IBAction func cancel(_ sender: AnyObject) {
-        dismiss(animated: true)
-    }
-    
-    @IBAction func done(_ sender: AnyObject) {
-        doneButton.isEnabled = false
-        
+    @IBAction func done(_ sender: AnyObject) {        
         if (input?.adjustmentData?.isUnflare() ?? false) == (adjustmentData?.isUnflare() ?? false) {
+            navigationController?.setToolbarHidden(true, animated: false)
             dismiss(animated: true)
             return
         }
@@ -142,8 +125,13 @@ class ImageViewController: UIViewController {
             }
         }, completionHandler: { bool, error in
             DispatchQueue.main.async {
+                self.navigationController?.setToolbarHidden(true, animated: true)
                 self.dismiss(animated: true)
             }
         })
+    }
+
+    func viewForTransition() -> UIView {
+        return imageView
     }
 }

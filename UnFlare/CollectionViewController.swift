@@ -11,19 +11,27 @@ import Photos
 
 class ViewCell : UICollectionViewCell {
     var asset: PHAsset?
+    @IBOutlet weak var imageView: UIImageView!
 }
 
-class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, ZoomTransitionProtocol {
 
     var assets: PHFetchResult<PHAsset>?
     var status: PHAuthorizationStatus?
-        
-    @IBOutlet weak var collectionButton: UIButton!
+    
+    var selectedIndexPath: IndexPath?
+    
+    var animationController: ZoomTransition?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTitle("All Photos")
+        navigationController?.toolbar.isHidden = true
+        
+        if let navigationController = self.navigationController {
+            animationController = ZoomTransition(navigationController: navigationController)
+        }
+        navigationController?.delegate = animationController
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,8 +59,6 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             }
         else {
             DispatchQueue.global().async {
-                self.slideTitle("Loading...")
-
                 let options = PHFetchOptions()
                 options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
                 self.assets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: options)
@@ -62,11 +68,13 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
                     let lastItem = self.collectionView?.numberOfItems(inSection: 0)
                     let indexPath = IndexPath(item: lastItem!-1, section: 0)
                     self.collectionView?.scrollToItem(at: indexPath, at: .bottom, animated: false)
-                    
-                    self.slideTitle()
                 }
             }
         }
+    }
+    
+    override func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        return false
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -92,7 +100,6 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ViewCell
-        let imageView = cell.viewWithTag(42) as! UIImageView
         let asset = assets!.object(at: indexPath.row)
         cell.asset = asset
 
@@ -112,40 +119,28 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         
         PHImageManager.default().requestImage(for: asset, targetSize: retinaSquare, contentMode: .aspectFit, options: options, resultHandler: {(result, info)->Void in
             DispatchQueue.main.async {
-                imageView.image = result
+                cell.imageView.image = result
             }
         })
         
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Photo" {
             let cell = sender as! ViewCell
-            let navigationController = segue.destination as! UINavigationController
-            let imageViewController = navigationController.viewControllers.first as! ImageViewController
+            let imageViewController = segue.destination as! ImageViewController
             imageViewController.asset = cell.asset
         }
     }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
-        let indexPath = collectionView?.indexPathsForVisibleItems.first
-
-        coordinator.animate(alongsideTransition: { _ in
-            self.collectionView?.reloadData()
-            DispatchQueue.main.async {
-                if let indexPath = indexPath {
-                    self.collectionView?.scrollToItem(at: indexPath, at: .top, animated: false)
-                }
-            }
-        }, completion: { _ in
-            DispatchQueue.main.async {
-                if let indexPath = indexPath {
-                    self.collectionView?.scrollToItem(at: indexPath, at: .top, animated: false)
-                }
-            }
-        })
+    
+    func viewForTransition() -> UIView {
+        collectionView?.layoutIfNeeded()
+        return (collectionView?.cellForItem(at: selectedIndexPath!) as! ViewCell).imageView
     }
     
 }

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A313a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rum-1b-wwR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16D17a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rum-1b-wwR">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,7 +20,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Denied" translatesAutoresizingMaskIntoConstraints="NO" id="SNW-xg-GPt"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Denied" translatesAutoresizingMaskIntoConstraints="NO" id="SNW-xg-GPt">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -50,7 +54,7 @@
             </objects>
             <point key="canvasLocation" x="886" y="-627"/>
         </scene>
-        <!--All Photos-->
+        <!--UnFlare-->
         <scene sceneID="2ek-31-gbn">
             <objects>
                 <collectionViewController id="2oD-dc-M6Y" customClass="CollectionViewController" customModule="UnFlare" customModuleProvider="target" sceneMemberID="viewController">
@@ -72,7 +76,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="42" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3dG-K4-PnL"/>
+                                        <imageView userInteractionEnabled="NO" tag="42" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3dG-K4-PnL">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        </imageView>
                                     </subviews>
                                 </view>
                                 <constraints>
@@ -82,10 +88,8 @@
                                     <constraint firstItem="3dG-K4-PnL" firstAttribute="centerX" secondItem="If3-b6-yCq" secondAttribute="centerX" id="xIh-pz-SsY"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="vGm-0c-06d" kind="presentation" identifier="Photo" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="rZ5-aa-EqT">
-                                        <segue key="commit" inheritsFrom="parent" id="eUY-L1-w17"/>
-                                        <segue key="preview" inheritsFrom="commit" id="0Aw-ut-6GR"/>
-                                    </segue>
+                                    <outlet property="imageView" destination="3dG-K4-PnL" id="5O8-Jh-ohR"/>
+                                    <segue destination="KfK-cL-rs3" kind="show" identifier="Photo" id="ELl-gm-4aH"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -95,39 +99,16 @@
                         </connections>
                     </collectionView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="All Photos" id="DYN-b4-f2m"/>
+                    <navigationItem key="navigationItem" title="UnFlare" id="DYN-b4-f2m"/>
                     <connections>
                         <segue destination="6Ue-rg-VZw" kind="show" identifier="Denied" animates="NO" id="iEu-cy-nEK"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8zp-NL-IYl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="886" y="53"/>
+            <point key="canvasLocation" x="969" y="62"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="1Zs-iC-pLM">
-            <objects>
-                <navigationController modalTransitionStyle="crossDissolve" toolbarHidden="NO" id="vGm-0c-06d" sceneMemberID="viewController">
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="DXM-qb-023">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translucent="NO" id="4o9-HO-YIm">
-                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="KfK-cL-rs3" kind="relationship" relationship="rootViewController" id="AxU-xQ-PqJ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OdP-TW-vGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1713" y="53"/>
-        </scene>
-        <!--Image View Controller-->
+        <!--UnFlare-->
         <scene sceneID="4zR-rH-YVY">
             <objects>
                 <viewController id="KfK-cL-rs3" customClass="ImageViewController" customModule="UnFlare" customModuleProvider="target" sceneMemberID="viewController">
@@ -136,11 +117,12 @@
                         <viewControllerLayoutGuide type="bottom" id="pD3-QJ-COa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="6cm-yg-M9N">
-                        <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IzL-At-dce">
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <color key="backgroundColor" red="0.99990183115005493" green="1" blue="0.99987989664077759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -151,46 +133,44 @@
                             <constraint firstItem="IzL-At-dce" firstAttribute="top" secondItem="fDF-4Z-xFt" secondAttribute="bottom" id="nMp-2X-j6k"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems>
-                        <barButtonItem systemItem="cancel" id="FcK-xN-t6K">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="S7U-JF-2rs"/>
+                        <barButtonItem systemItem="save" id="Nio-uQ-dGX">
                             <connections>
-                                <action selector="cancel:" destination="KfK-cL-rs3" id="wod-cc-bEN"/>
+                                <action selector="done:" destination="KfK-cL-rs3" id="ihw-Bn-mkp"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="1mk-Z5-khs"/>
-                        <barButtonItem enabled="NO" title="Done" id="wjO-Nb-hB7">
-                            <color key="tintColor" red="0.9912555520304569" green="0.94829563382959614" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="done:" destination="KfK-cL-rs3" id="ixf-ov-2ba"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Lgs-aJ-MC9"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" id="xAq-Cv-jxI">
+                    <navigationItem key="navigationItem" title="UnFlare" id="xAq-Cv-jxI">
                         <barButtonItem key="rightBarButtonItem" enabled="NO" image="Wand" id="m1J-s8-CN7">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="action:" destination="KfK-cL-rs3" id="EGs-nc-xkz"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="doneButton" destination="wjO-Nb-hB7" id="V6b-eN-cKT"/>
                         <outlet property="imageView" destination="IzL-At-dce" id="IJz-TJ-ENn"/>
                         <outlet property="topButton" destination="m1J-s8-CN7" id="xoz-Tx-TEG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N6T-QK-aT6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2463" y="53"/>
+            <point key="canvasLocation" x="1692" y="69"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QIz-QN-rne">
             <objects>
-                <navigationController id="rum-1b-wwR" sceneMemberID="viewController">
+                <navigationController toolbarHidden="NO" id="rum-1b-wwR" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="c8L-ZV-fR9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="7dK-2I-oZR">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="2oD-dc-M6Y" kind="relationship" relationship="rootViewController" id="yyz-Rw-NjX"/>
                     </connections>
@@ -204,7 +184,4 @@
         <image name="Denied" width="703" height="554"/>
         <image name="Wand" width="22" height="22"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="rZ5-aa-EqT"/>
-    </inferredMetricsTieBreakers>
 </document>
