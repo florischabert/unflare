@@ -4,7 +4,7 @@ import urllib
 import glob
 import random
 
-MODEL = 'ssd_mobilenet_v1_coco_11_06_2017'
+MODEL = 'faster_rcnn_inception_resnet_v2_atrous_coco_11_06_2017'
 SEED = 0
 
 if not os.path.isdir(MODEL):
