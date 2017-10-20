@@ -1,0 +1,18 @@
+<annotation>
+    <folder>train</folder>
+    <filename>IMG_0577.jpg</filename>
+    <size>
+        <width>3024</width>
+        <height>4032</height>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>flare</name>
+        <bndbox>
+            <xmin>1399</xmin>
+            <ymin>3045</ymin>
+            <xmax>1447</xmax>
+            <ymax>3098</ymax>
+        </bndbox>
+    </object>
+</annotation>

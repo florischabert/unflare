@@ -1,0 +1,21 @@
+<annotation>
+    <folder>test</folder>
+    <filename>IMG_0597.jpg</filename>
+    <size>
+        <width>3024</width>
+        <height>4032</height>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>flare</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>1854</xmin>
+            <ymin>2076</ymin>
+            <xmax>1896</xmax>
+            <ymax>2119</ymax>
+        </bndbox>
+    </object>
+</annotation>
