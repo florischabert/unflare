@@ -1,0 +1,18 @@
+<annotation>
+    <folder>data</folder>
+    <filename>beach.jpg</filename>
+    <size>
+        <width>1000</width>
+        <height>750</height>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>flare</name>
+        <bndbox>
+            <xmin>837</xmin>
+            <ymin>544</ymin>
+            <xmax>848</xmax>
+            <ymax>555</ymax>
+        </bndbox>
+    </object>
+</annotation>

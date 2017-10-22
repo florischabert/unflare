@@ -1,0 +1,18 @@
+<annotation>
+    <folder>data</folder>
+    <filename>IMG_0682.jpg</filename>
+    <size>
+        <width>4032</width>
+        <height>3024</height>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>flare</name>
+        <bndbox>
+            <xmin>1961</xmin>
+            <ymin>1616</ymin>
+            <xmax>2005</xmax>
+            <ymax>1660</ymax>
+        </bndbox>
+    </object>
+</annotation>
