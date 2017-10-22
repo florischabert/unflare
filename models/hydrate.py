@@ -20,8 +20,9 @@ if not os.path.exists('train.records') or not os.path.exists('eval.records'):
   images = glob.glob('../data/annotations/*.xml')
   random.seed(SEED)
   random.shuffle(images)
+  images = ['"'+image+'"' for image in images]
   eval_set, train_set = images[:len(images)/4], images[len(images)/4:]
-  os.system('python pascal_to_tf.py "%s" train.records' % ' '.join(train_set))
-  os.system('python pascal_to_tf.py "%s" eval.records' % ' '.join(eval_set))
+  os.system('python pascal_to_tf.py %s train.records' % ' '.join(train_set))
+  os.system('python pascal_to_tf.py %s eval.records' % ' '.join(eval_set))
 
 print('Hydration done!')
